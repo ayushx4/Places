@@ -8,6 +8,7 @@ class InputFeild extends StatefulWidget {
   bool isPassword;
 
 
+
   InputFeild({
     required this.controller,
     required this.isPassword,
@@ -34,16 +35,16 @@ class _InputFeildState extends State<InputFeild> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: TextField(
-            controller: widget.controller,
-            obscureText: widget.isPassword,
-            obscuringCharacter: "*",
+                controller: widget.controller,
+                obscureText: widget.isPassword,
+                obscuringCharacter: "*",
 
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: widget.hintText,
-              label: Text(widget.label),
-            ),
-          ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: widget.hintText,
+                  label: Text(widget.label),
+                ),
+              ),
         ),
       ),
     );

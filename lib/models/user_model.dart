@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 
 class UserModel{
 
-  String? userId;
+  String? uid;
   String? userName;
   String? mailId;
+  String? profilePic;
   String? phoneNumber;
   String? description;
   String? country;
@@ -15,7 +15,7 @@ class UserModel{
   int? sem;
 
   UserModel({
-    this.userId,
+    this.uid,
     this.userName,
     this.year,
     this.country,
@@ -26,10 +26,11 @@ class UserModel{
     this.phoneNumber,
     this.sem,
     this.state,
+    this.profilePic,
   });
 
   UserModel.fromMap(Map<String,dynamic>map){
-    userId=map["userId"];
+    uid=map["userId"];
     userName=map["userName"];
     year=map["year"];
     country=map["country"];
@@ -40,11 +41,13 @@ class UserModel{
     phoneNumber=map["phoneNumber"];
     sem=map["sem"];
     state=map["state"];
+    profilePic=map["profilePic"];
   }
 
   Map<String,dynamic> toMap(){
     return {
-      "userId" : userId,
+
+      "userId" : uid,
       "userName" : userName,
       "year" : year,
       "country" :country,
@@ -55,6 +58,8 @@ class UserModel{
       "phoneNumber" : phoneNumber,
       "sem" : sem,
       "state" : state,
+      "profilePic" : profilePic,
+
   };
 }
 

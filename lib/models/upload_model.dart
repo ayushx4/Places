@@ -2,8 +2,8 @@ class UploadModel{
   String? uploadId;
   String? title;
   String? desc;
-  String? course;
-  String? sem;
+  String? course; //for next version
+  String? sem;  //for next version
   String? subject;
 
   UploadModel({

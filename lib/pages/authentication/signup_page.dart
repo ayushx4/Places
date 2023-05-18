@@ -1,3 +1,4 @@
+import 'package:clg_mat/services/auth_services.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:clg_mat/widgets/input_field.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,15 @@ class _SignUpPageState extends State<SignUpPage> {
                 SizedBox(height: 18,),
 
                 Btn(
-                    text: "Sign Up"
+                  onTap: ()async{
+
+                    AuthServices().signInWithMail(
+                        emailController.text.trim(),
+                        passwordController.text.trim(),
+                      context
+                    );
+                  },
+                    text: "Sign Up",
                 ),
 
 
@@ -60,3 +69,5 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 }
+
+
