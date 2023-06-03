@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:clg_mat/services/auth_services.dart';
 import 'package:clg_mat/widgets/btn.dart';
-import 'package:clg_mat/widgets/input_field.dart';
+import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,14 +28,14 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                InputFeild(
+                CustomInputFeild(
                     controller:emailController ,
                     isPassword: false,
                     label:"Email",
                   hintText: "Enter email",
                 ),
 
-                InputFeild(
+                CustomInputFeild(
                     controller: passwordController,
                     isPassword: true,
                     label: "Password",

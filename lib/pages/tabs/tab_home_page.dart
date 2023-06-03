@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TabHomePage extends StatefulWidget {
   const TabHomePage({Key? key}) : super(key: key);
@@ -10,6 +11,14 @@ class TabHomePage extends StatefulWidget {
 class _TabHomePageState extends State<TabHomePage> {
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          systemNavigationBarColor: Color(0xFF4D4545),
+          statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark
+        )
+    );
 
     return Container(
       height: MediaQuery.of(context).size.height,

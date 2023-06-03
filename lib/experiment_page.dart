@@ -102,3 +102,94 @@ var i=0;
 // ),
 // ),
 // )
+
+
+
+
+
+// navigation bar code
+
+// Column(
+// children: [
+// IconButton(
+// onPressed: onPressed,
+// icon: Icon(
+// icon,
+// size: 35,
+// // color: selected ? Colors.red : Colors.white,
+// color: selected ? const Color(0xFFFF4409) : Colors.white,
+// ),
+// ),
+//
+// ],
+// );
+
+
+
+
+
+//////////
+// Positioned(
+// bottom: 0,
+// width: MediaQuery.of(context).size.width,
+// child: Padding(
+// padding: EdgeInsets.symmetric(horizontal: 40,vertical: 5),
+// child: Container(
+// decoration: BoxDecoration(
+// color: Color(0xff4d4545),
+// borderRadius: BorderRadius.all(Radius.circular(50)),
+// ),
+// child: BottomAppBar(
+// elevation: 0,
+// color: Colors.transparent,
+//
+// child: SizedBox(
+// height: 68,
+// width: MediaQuery.of(context).size.width,
+// child: Padding(
+// padding: EdgeInsets.symmetric(horizontal: 0 , vertical: 10),
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+// children: [
+// //Home
+// IconBottomBar(
+// icon: Icons.home_filled,
+// selected: _selected == 0,
+// onPressed: (){
+// setState(() {
+// _selected = 0;
+// });
+// },
+// ),
+//
+// //Add
+// IconBottomBar(
+//
+// icon: Icons.add_circle,
+// selected:_selected == 1,
+// onPressed: (){
+// setState(() {
+// _selected = 1;
+// });
+// },
+// ),
+//
+// //Profile
+// IconBottomBar(
+// icon: Icons.person,
+// selected: _selected == 2,
+// onPressed: (){
+// setState(() {
+// _selected = 2;
+// });
+// },
+// ),
+//
+// ],
+// ),
+// ),
+// ),
+// ),
+// ),
+// ),
+// )
