@@ -1,4 +1,4 @@
-import 'package:clg_mat/pages/tabs/place/new_place_page.dart';
+import 'package:clg_mat/pages/tabs/place/create_your_place_page.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -87,7 +87,7 @@ class _TabAddPageState extends State<TabAddPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NewPlacePage(uid: widget.uid,)
+                                  builder: (context) => CreateYourPlace(uid: widget.uid,)
                               )
                             );
                           },

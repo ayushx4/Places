@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class TabHomePage extends StatefulWidget {
-  const TabHomePage({Key? key}) : super(key: key);
+  String? uid;
+  TabHomePage({required this.uid});
 
   @override
   State<TabHomePage> createState() => _TabHomePageState();

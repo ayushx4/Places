@@ -1,33 +1,34 @@
 class FileModel{
   String? fileId;
-  String? fileType; // the file is pdfs, links , docs etc
   String? fileTitle;
-  String? fileNote;
-  Map<String,dynamic>? attachment;
+  String? fileDescription;
+  String? fileUrl;
+  DateTime? fileCreatedOn;
 
   FileModel({
     this.fileTitle,
-    this.fileNote,
     this.fileId,
-    this.fileType,
-    this.attachment,
+    this.fileCreatedOn,
+    this.fileUrl,
+    this.fileDescription
   });
 
   FileModel.fromMap(Map<String,dynamic> map){
     fileId = map["uploadId"];
     fileTitle =map["title"];
-    fileNote =map["desc"];
-    fileType=map["folderType"];
-    attachment=map["attachment"];
+    fileUrl=map["fileUrl"];
+    fileCreatedOn = map["fileCreatedOn"];
+    fileDescription = map["fileDescription"];
+
   }
 
   Map<String , dynamic> toMap(){
     return{
       "fileId" : fileId,
       "fileTitle" : fileTitle,
-      "fileNote" : fileNote,
-      "fileType" : fileType,
-      "attachment" : attachment,
+      "fileUrl" : fileUrl,
+      "fileCreatedOn" : fileCreatedOn,
+      "fileDescription" : fileDescription
     };
   }
 

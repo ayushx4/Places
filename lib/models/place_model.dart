@@ -2,36 +2,40 @@ class PlaceModel{
   String? uid;
   String? placeId;
   String? placeName;
-  String? aboutPlace;
-  String? visibility;
-  DateTime? createdOn;
+  String? placeAbout;
+  String? placeVisibility;
+  DateTime? placeCreatedOn;
+  List? fileList;
 
   PlaceModel({
-    required this.uid,
-    required this.placeId,
+    this.uid,
+    this.placeId,
     this.placeName,
-    this.visibility,
-    this.aboutPlace,
-    this.createdOn,
+    this.placeVisibility,
+    this.placeAbout,
+    this.placeCreatedOn,
+    this.fileList,
 });
 
   PlaceModel.fromMap(Map<String,dynamic> map){
     uid = map[uid];
     placeId =map[placeId];
     placeName = map[placeName];
-    aboutPlace = map[aboutPlace];
-    visibility = map[visibility];
-    createdOn = map[createdOn];
+    placeAbout = map[placeAbout];
+    placeVisibility = map[placeVisibility];
+    placeCreatedOn = map[placeCreatedOn];
+    fileList = map[fileList];
   }
 
   Map<String,dynamic> toMap(){
     return {
-      "userUid" : uid,
-      "placeUid" : placeId,
+      "uid" : uid,
+      "placeId" : placeId,
       "placeName" : placeName,
-      "aboutPlace" : aboutPlace,
-      "visibility" : visibility,
-      "createdOn" : createdOn,
+      "placeAbout" : placeAbout,
+      "placeVisibility" : placeVisibility,
+      "placeCreatedOn" : placeCreatedOn,
+      "fileList" : fileList,
 
   };
 }

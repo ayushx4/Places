@@ -25,9 +25,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     final screen = [
-      TabHomePage(),
+      TabHomePage(uid: widget.uid,),
       TabAddPage(uid: widget.uid,),
-      TabMyProfilePage(),
+      TabMyProfilePage(uid: widget.uid),
     ];
 
     return Scaffold(

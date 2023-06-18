@@ -1,5 +1,5 @@
 import 'package:clg_mat/models/place_model.dart';
-import 'package:clg_mat/pages/tabs/place/edit_place.dart';
+import 'package:clg_mat/pages/show_place.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,20 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 
-class NewPlacePage extends StatefulWidget {
+class CreateYourPlace extends StatefulWidget {
 
   String? uid;
-  NewPlacePage({
+  CreateYourPlace({
     required this.uid,
 });
 
   @override
-  State<NewPlacePage> createState() => _NewPlacePageState();
+  State<CreateYourPlace> createState() => _CreateYourPlaceState();
 }
 
-class _NewPlacePageState extends State<NewPlacePage> {
-  var placeNameController = TextEditingController();
-  var placeAboutController = TextEditingController();
+class _CreateYourPlaceState extends State<CreateYourPlace> {
+  TextEditingController placeNameController = TextEditingController();
+  TextEditingController placeAboutController = TextEditingController();
   var visibilityList = ["Public", "Private"];
   String visibilityValue = "Public";
 
@@ -36,7 +36,7 @@ class _NewPlacePageState extends State<NewPlacePage> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Color(0xFF413636),
-      statusBarColor: Colors.white,
+      statusBarColor: Color(0xFF413636),
       statusBarIconBrightness: Brightness.light,
     ));
 
@@ -88,7 +88,7 @@ class _NewPlacePageState extends State<NewPlacePage> {
                           "Create your\nPlace",
                           textAlign: TextAlign.start,
                           style: TextStyle(
-                            color: Color(0xFFFF4409),
+                            color: Colors.black,
                             fontSize: 60,
                             fontWeight: FontWeight.bold,
                           ),
@@ -173,29 +173,35 @@ class _NewPlacePageState extends State<NewPlacePage> {
 
 
       //create place btn
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: InkWell(
 
-        onPressed: () async{
+        onTap: () async{
+          String placeName = placeNameController.text.trim();
+          String placeAbout = placeAboutController.text.trim();
+
           try{
-          if(placeNameController !=null){
+          if(placeName != ""){
 
             PlaceModel newPlaceModel = PlaceModel(
               uid: widget.uid,
               placeId: Uuid().v4(),
-              placeName: placeNameController.text.trim(),
-              aboutPlace: placeAboutController.text.trim(),
-              visibility: visibilityValue,
-              createdOn: DateTime.now(),
+              placeName: placeName,
+              placeAbout: placeAbout,
+              placeVisibility: visibilityValue,
+              placeCreatedOn: DateTime.now(),
             );
 
            var createPlace = await FirebaseFirestore.instance.collection("places").
                                     doc(newPlaceModel.placeId).set(newPlaceModel.toMap());
+
+           Navigator.popUntil(context, (route) => route.isFirst);
            Navigator.pushReplacement(
                context,
                MaterialPageRoute
-                 (builder: (context)=>EditPlace(
+                 (builder: (context)=>ShowPlace(
                    uid: widget.uid.toString(),
-                   placeId: newPlaceModel.placeId.toString()
+                   placeId: newPlaceModel.placeId.toString(),
+                 isViwersPlace: true,
                )));
             
           }}catch (error){
@@ -243,3 +249,6 @@ class _NewPlacePageState extends State<NewPlacePage> {
 
 
 }
+
+
+

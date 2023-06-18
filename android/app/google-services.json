@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "57289222204",
-    "project_id": "clg-mate",
-    "storage_bucket": "clg-mate.appspot.com"
+    "project_number": "364142001453",
+    "project_id": "places-df5ef",
+    "storage_bucket": "places-df5ef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:57289222204:android:28d3208f482db723f2bb39",
+        "mobilesdk_app_id": "1:364142001453:android:244b7beeebc9c6857167a4",
         "android_client_info": {
           "package_name": "com.example.clg_mat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "57289222204-6hijsacq2nq0oledrv93ik9dqfdiubrj.apps.googleusercontent.com",
+          "client_id": "364142001453-a8rm08k4e4j21aailnhlms6421g0tma6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6G5UkfSeSdQBQ3ZrOiO2RtfVPy14UnMc"
+          "current_key": "AIzaSyASxfUpQgRWNhKLLdErYqB_h7DhFxCoe4Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "57289222204-6hijsacq2nq0oledrv93ik9dqfdiubrj.apps.googleusercontent.com",
+              "client_id": "364142001453-a8rm08k4e4j21aailnhlms6421g0tma6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -138,7 +138,7 @@ class _BasicDetailState extends State<BasicDetail> {
     print(imageFile.toString());
 
     if(imageFile==null){
-      AlertMessage(Text("Someting want wrong"), context);
+      AlertMessage(context , Text("Someting want wrong"));
     }else{
       final tempImage = File(imageFile!.path);
       // CroppedFile? croppedFile = await ImageCropper().cropImage(sourcePath: imageFile!.path);
@@ -154,13 +154,13 @@ class _BasicDetailState extends State<BasicDetail> {
     log("entering crete profile block of code////////////////////////");
 
     if (usernameController != null) {
-      uploadTask();
+      await uploadTask();
 
       try {
         await FirebaseFirestore.instance.collection("users")
             .doc(widget.userModel.uid).set(widget.userModel.toMap());
       } catch (error) {
-        AlertMessage(Text(error.toString()), context);
+        AlertMessage(context , Text(error.toString()));
       }
 
       Navigator.popUntil(context, (route) => route.isFirst);
@@ -170,7 +170,7 @@ class _BasicDetailState extends State<BasicDetail> {
               HomePage(uid: widget.userModel.uid.toString()))
       );
     } else {
-      AlertMessage(Text("Please enter username"), context);
+      AlertMessage(context , Text("Please enter username"));
     }
   }
 
@@ -183,10 +183,10 @@ class _BasicDetailState extends State<BasicDetail> {
 
       await storageReference.putFile(profileImage!);
 
-      AlertMessage(Text("Nice Profile pic"), context);
+      AlertMessage(context, Text("Nice Profile pic"));
 
 
-      storageReference.getDownloadURL().then(
+     await storageReference.getDownloadURL().then(
               (imageUrl) async{
             widget.userModel.profilePic = imageUrl;
           }
