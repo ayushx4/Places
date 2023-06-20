@@ -13,7 +13,6 @@ class UserModel{
   String? course;
   int? year;
   int? sem;
-  List? placeList;
 
   UserModel({
     this.uid,
@@ -28,7 +27,6 @@ class UserModel{
     this.sem,
     this.state,
     this.profilePic,
-    this.placeList,
   });
 
   UserModel.fromMap(Map<String,dynamic>map){
@@ -44,7 +42,6 @@ class UserModel{
     sem=map["sem"];
     state=map["state"];
     profilePic=map["profilePic"];
-    placeList=map["placeList"];
   }
 
   Map<String,dynamic> toMap(){
@@ -62,7 +59,6 @@ class UserModel{
       "sem" : sem,
       "state" : state,
       "profilePic" : profilePic,
-      "placeList" : placeList,
 
   };
 }

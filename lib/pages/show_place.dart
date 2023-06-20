@@ -25,17 +25,35 @@ class _ShowPlaceState extends State<ShowPlace> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: ConstColor.bgColor,
-      statusBarColor: ConstColor.bgColor,
+      statusBarColor: ConstColor.SCWhite,
       statusBarIconBrightness: Brightness.dark,
     ));
 
     return Scaffold(
-      backgroundColor: ConstColor.bgColor,
+        appBar: AppBar(
+          backgroundColor: ConstColor.bgColor,
+          elevation: 0,
+          title: Text(
+            "Place",
+            style: TextStyle(color: Colors.black),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(uid: widget.uid)));
+            },
+            icon: Icon(
+              MdiIcons.arrowLeft,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        backgroundColor: ConstColor.bgColor,
         body: SafeArea(
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.transparent
-            ),
+            decoration: BoxDecoration(color: Colors.transparent),
             child: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
                     .collection("places")
@@ -56,7 +74,6 @@ class _ShowPlaceState extends State<ShowPlace> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
                               Expanded(
                                 child: ScrollConfiguration(
                                   behavior: ScrollBehavior(
@@ -74,7 +91,7 @@ class _ShowPlaceState extends State<ShowPlace> {
                                           snapshot.data!["placeName"],
                                           textAlign: TextAlign.start,
                                           style: TextStyle(
-                                            color: Colors.black,
+                                            color: Color(0XFF221A4C),
                                             fontSize: 60,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -93,9 +110,9 @@ class _ShowPlaceState extends State<ShowPlace> {
                                                   // color: Colors.red,
                                                   ),
                                               child: Text(
-                                                (placeAbout=="") ?
-                                                "This place is for the Codding Geeks"
-                                                : placeAbout,
+                                                (placeAbout == "")
+                                                    ? "This place is for the Codding Geeks"
+                                                    : placeAbout,
                                                 style: TextStyle(
                                                     color: Colors.black45),
                                               ),
@@ -120,24 +137,63 @@ class _ShowPlaceState extends State<ShowPlace> {
                                                 shrinkWrap: true,
                                                 itemCount: fileList.length,
                                                 itemBuilder: (context, index) {
-                                                  String fileId = fileList[index];
+                                                  String fileId =
+                                                      fileList[index];
+
                                                   return GestureDetector(
                                                     onTap: fileOpenFunc(fileId),
-                                                    child: Card(
-                                                      color: Colors.white70,
-                                                      child: ListTile(
-                                                        title: Text(
-                                                          fileId,
-                                                          style: TextStyle(
-                                                              color: ConstColor.dataColor,
-                                                              fontWeight: FontWeight.bold,
+                                                    // child: Card(
+                                                    //   color: Colors.white70,
+                                                    //   child: ListTile(
+                                                    //     title: Text(
+                                                    //       fileId,
+                                                    //       style: TextStyle(
+                                                    //         color: ConstColor.dataColor,
+                                                    //         fontWeight: FontWeight.bold,
+                                                    //       ),
+                                                    //     ),
+                                                    //     leading: Icon(
+                                                    //       Icons.picture_as_pdf,
+                                                    //       color: ConstColor
+                                                    //           .mainColor,
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
+                                                    child: Container(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          //icon
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        10),
+                                                            child: Icon(Icons
+                                                                .picture_as_pdf_outlined),
                                                           ),
-                                                        ),
-                                                        leading: Icon(
-                                                          Icons.picture_as_pdf,
-                                                          color: ConstColor
-                                                              .mainColor,
-                                                        ),
+
+                                                          //name and description
+                                                          Column(
+                                                            children: [
+                                                              Container(
+                                                                height: 20,
+                                                                child: Text(
+                                                                  "Milega name ruk zara",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .fade,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
                                                   );
@@ -169,8 +225,8 @@ class _ShowPlaceState extends State<ShowPlace> {
                             )),
                   );
                 },
-          backgroundColor: ConstColor.mainColor,
-          child: Icon(MdiIcons.plus),
+                backgroundColor: ConstColor.mainColor,
+                child: Icon(MdiIcons.plus),
               ));
   }
 

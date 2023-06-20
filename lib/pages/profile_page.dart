@@ -2,17 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../constants/const_colors.dart';
 
 
-class TabMyProfilePage extends StatefulWidget {
+
+class ProfilePage extends StatefulWidget {
   String? uid;
-  TabMyProfilePage({required this.uid});
+  ProfilePage({required this.uid});
 
   @override
-  State<TabMyProfilePage> createState() => _TabMyProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _TabMyProfilePageState extends State<TabMyProfilePage> {
+class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class _TabMyProfilePageState extends State<TabMyProfilePage> {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(
             systemNavigationBarColor: Color(0xFF4D4545),
-            statusBarColor: Colors.white,
+            statusBarColor: ConstColor.SCWhite,
             statusBarIconBrightness: Brightness.dark
         )
     );
