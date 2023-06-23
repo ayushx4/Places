@@ -11,9 +11,14 @@ class ConstColor{
   static const Color mainColorD2= Color(0xFF221A4C);
 
   static const Color bgColor = Colors.white;
-  static const Color dataColor = Colors.black;
   static const Color blackColor = Colors.black;
+  static const Color widgetsBgGrayColor = Colors.grey;
 
   //System chrome color
   static const Color SCWhite = Colors.white;
+
+  //font Colors
+  static const Color fontBlackk = Colors.black;
+  static const Color fontLightBlack = Colors.black54;
+
 }

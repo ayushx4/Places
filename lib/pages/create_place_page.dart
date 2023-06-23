@@ -25,12 +25,6 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
   String visibilityValue = "Public";
 
   @override
-  void dispose() {
-    super.dispose();
-    placeNameController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Color(0xFF413636),
@@ -47,7 +41,10 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
           iconTheme: IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: ConstColor.bgColor,
-          title: Text("Create place",style: TextStyle(color: Colors.black),),
+          title: Text(
+            "Create place",
+            style: TextStyle(color: Colors.black),
+          ),
         ),
         body: SafeArea(
           child: Container(

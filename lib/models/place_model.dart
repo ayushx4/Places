@@ -6,6 +6,7 @@ class PlaceModel{
   String? placeVisibility;
   DateTime? placeCreatedOn;
   List? fileList;
+  List? placeKeywords;
 
   PlaceModel({
     this.uid,
@@ -15,6 +16,7 @@ class PlaceModel{
     this.placeAbout,
     this.placeCreatedOn,
     this.fileList,
+    this.placeKeywords
 });
 
   PlaceModel.fromMap(Map<String,dynamic> map){
@@ -25,6 +27,7 @@ class PlaceModel{
     placeVisibility = map[placeVisibility];
     placeCreatedOn = map[placeCreatedOn];
     fileList = map[fileList];
+    placeKeywords = map[placeKeywords];
   }
 
   Map<String,dynamic> toMap(){
@@ -36,6 +39,7 @@ class PlaceModel{
       "placeVisibility" : placeVisibility,
       "placeCreatedOn" : placeCreatedOn,
       "fileList" : fileList,
+      "placeKeywords" : placeKeywords,
 
   };
 }
