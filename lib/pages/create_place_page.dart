@@ -194,7 +194,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Btn(
-            text: "Create place",
+            text: "Create ",
             textStyle: TextStyle(
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
             btnGradient: LinearGradient(

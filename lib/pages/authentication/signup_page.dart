@@ -1,7 +1,10 @@
+import 'package:clg_mat/constants/const_colors.dart';
+import 'package:clg_mat/pages/authentication/login_page.dart';
 import 'package:clg_mat/services/auth_services.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -18,33 +21,82 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: ConstColor.mainColorL2,
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: ConstColor.mainColorL2,
+      )
+    );
+
+
     return Scaffold(
-      backgroundColor: Colors.brown,
+      backgroundColor: ConstColor.mainColorL2,
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomInputFeild(
-                  controller:emailController ,
-                  isPassword: false,
-                  label:"Email",
-                  hintText: "Enter email",
+                //logo
+                SizedBox(
+                  height: 70,
+                  child: const Image(
+                      image: AssetImage("assets/images/app_logo3.png")),
                 ),
 
-                CustomInputFeild(
-                  controller: passwordController,
-                  isPassword: true,
-                  label: "Password",
-                  hintText: "Enter password",
+
+                Container(
+                  width: MediaQuery.of(context).size.width/2,
+                  child: FittedBox(
+                    fit: BoxFit.contain ,
+                    child: const Text("Sign Up",
+                    style: TextStyle(
+                      color: ConstColor.mainColorD2,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Alegreya_Sans",
+                      // fontSize: double.infinity
+                    )
+                      ,
+                    ),
+                  ),
                 ),
-                CustomInputFeild(
-                  controller: confirmPasswordController,
-                  isPassword: true,
-                  label: "Confirm password",
-                  hintText: "Enter password",
+               const Text("it's totally free",
+                  style: TextStyle(
+                      color: ConstColor.mainColorD1,
+                      fontWeight: FontWeight.w300,
+                    fontFamily: "Josefin_Sans",
+                    fontSize: 18,
+
+                  )
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: CustomInputFeild(
+                    controller:emailController ,
+                    isPassword: false,
+                    label:"Email",
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: CustomInputFeild(
+                    controller: passwordController,
+                    isPassword: true,
+                    label: "Password",
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: CustomInputFeild(
+                    controller: confirmPasswordController,
+                    isPassword: true,
+                    label: "Confirm password",
+                  ),
                 ),
                 SizedBox(height: 18,),
 
@@ -58,6 +110,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     );
                   },
                     text: "Sign Up",
+                  textStyle: TextStyle(color: Colors.white),
+                  btnColor: ConstColor.mainColor,
+                  btnWidth: MediaQuery.of(context).size.width,
+                  btnShadow: [
+                    BoxShadow(
+                      color: ConstColor.mainColorL1,
+                      offset: Offset(5,5),
+                    )
+                  ],
                 ),
 
 
@@ -66,6 +127,39 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
+
+        bottomNavigationBar: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Already have an account ",
+                  style: TextStyle(color: ConstColor.mainColorD1),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context)=> LoginPage(),
+                        ));
+                  },
+                  child: Text(
+                      "Log In",
+                      style: TextStyle(color: Colors.black,fontWeight : FontWeight.w600,fontFamily:"Alegreya_Sans",fontSize: 18)
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
+
+
+
     );
   }
 }

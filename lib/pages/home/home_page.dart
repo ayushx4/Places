@@ -30,7 +30,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
       statusBarColor: ConstColor.SCWhite,
       statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark,
@@ -150,17 +151,15 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        elevation: 5,
+        // backgroundColor: Colors.transparent,
         backgroundColor: ConstColor.mainColor,
         onPressed: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => CreatePlacePage(uid: widget.uid)));
-        },
-        child: Icon(MdiIcons.plus,
-          color: Colors.white,
-        ),
-      ),
+        }, child: Icon(MdiIcons.plus,color: Colors.white,size: 30,)      ),
     );
   }
 }

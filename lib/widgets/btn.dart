@@ -33,8 +33,6 @@ class _BtnState extends State<Btn> {
     return GestureDetector(
       onTap: widget.onTap,
       child: AnimatedContainer(
-        // height: 45,
-        //   width: 120,
         height: widget.btnHeight ?? 45,
         width: widget.btnWidth ?? 120,
           duration:Duration(milliseconds: 1000),

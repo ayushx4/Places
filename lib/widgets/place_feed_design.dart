@@ -74,16 +74,12 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                             constraints: BoxConstraints(
                               maxHeight: 50,
                             ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  placeAbout,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    overflow: TextOverflow.fade
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              placeAbout,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  overflow: TextOverflow.fade
+                              ),
                             ),
                           ),
 

@@ -1,3 +1,4 @@
+import 'package:clg_mat/constants/const_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomInputFeild extends StatefulWidget {
@@ -8,6 +9,7 @@ class CustomInputFeild extends StatefulWidget {
   String? hintText;
   String label;
   TextEditingController controller;
+  BoxDecoration? boxDecoration;
   bool isPassword;
 
 
@@ -21,6 +23,7 @@ class CustomInputFeild extends StatefulWidget {
     this.width,
     this.height,
     this.maxLine,
+    this.boxDecoration
 });
 
   @override
@@ -34,9 +37,10 @@ class _CustomInputFeildState extends State<CustomInputFeild> {
     return Container(
       height: widget.height ?? null,
       width: widget.width ?? null,
-      decoration: BoxDecoration(
+      decoration: widget.boxDecoration ?? BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
-          color: widget.color ?? Colors.white70
+          color: widget.color ?? Colors.white70,
+        border: Border.all(color: ConstColor.mainColorD2)
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -49,7 +53,7 @@ class _CustomInputFeildState extends State<CustomInputFeild> {
           keyboardType: (widget.maxLine) != null ? TextInputType.multiline : null,
 
           decoration: InputDecoration(
-            border: InputBorder.none,
+            border: InputBorder.none ,
             hintText: widget.hintText,
             label: Text(widget.label,style: TextStyle(color: Colors.black54,fontSize: 16),),
           ),
