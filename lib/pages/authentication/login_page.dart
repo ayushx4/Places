@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const Text("stay login",
+                const Text("stay logged in",
                     style: TextStyle(
                       color: ConstColor.mainColorD1,
                       fontWeight: FontWeight.w300,
@@ -74,7 +74,6 @@ class _LoginPageState extends State<LoginPage> {
                     controller: emailController,
                     isPassword: false,
                     label: "Email",
-                    hintText: "Enter email",
                   ),
                 ),
                 Padding(
@@ -83,7 +82,6 @@ class _LoginPageState extends State<LoginPage> {
                     controller: passwordController,
                     isPassword: true,
                     label: "Password",
-                    hintText: "Enter password",
                   ),
                 ),
                 SizedBox(

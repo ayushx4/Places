@@ -194,10 +194,10 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Btn(
-            text: "Create ",
-            textStyle: TextStyle(
+            text: "Create",
+            textStyle: const TextStyle(
                 color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-            btnGradient: LinearGradient(
+            btnGradient: const LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.centerRight,
                 colors: [
@@ -206,10 +206,10 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                   ConstColor.mainColor,
                   ConstColor.mainColor
                 ]),
-            btnShadow: [
+            btnShadow:const [
               BoxShadow(
                 color: Colors.black54,
-                offset: const Offset(1.0, 1.0),
+                offset: Offset(1.0, 1.0),
                 blurRadius: 4,
               ),
             ],

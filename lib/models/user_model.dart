@@ -6,27 +6,31 @@ class UserModel{
   String? mailId;
   String? profilePic;
   String? phoneNumber;
-  String? description;
+  String? aboutUser;
   String? country;
+  DateTime? createdOn;
+  int? avatar;
 
   UserModel({
     this.uid,
     this.userName,
     this.country,
-    this.description,
+    this.aboutUser,
     this.mailId,
     this.phoneNumber,
     this.profilePic,
+    this.createdOn,
   });
 
   UserModel.fromMap(Map<String,dynamic>map){
     uid=map["userId"];
     userName=map["userName"];
     country=map["country"];
-    description=map["description"];
+    aboutUser=map["description"];
     mailId=map["mailId"];
     phoneNumber=map["phoneNumber"];
     profilePic=map["profilePic"];
+    createdOn=map["createdOn"];
   }
 
   Map<String,dynamic> toMap(){
@@ -35,10 +39,11 @@ class UserModel{
       "userId" : uid,
       "userName" : userName,
       "country" :country,
-      "description" : description,
+      "description" : aboutUser,
       "mailId" : mailId,
       "phoneNumber" : phoneNumber,
       "profilePic" : profilePic,
+      "createdOn" : createdOn,
 
   };
 }

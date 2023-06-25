@@ -1,6 +1,7 @@
 import 'package:clg_mat/constants/const_colors.dart';
 import 'package:clg_mat/pages/authentication/login_page.dart';
 import 'package:clg_mat/services/auth_services.dart';
+import 'package:clg_mat/widgets/alert_message.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
@@ -49,11 +50,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
 
-                Container(
+               SizedBox(
                   width: MediaQuery.of(context).size.width/2,
-                  child: FittedBox(
+                  child: const FittedBox(
                     fit: BoxFit.contain ,
-                    child: const Text("Sign Up",
+                    child: Text("Sign Up",
                     style: TextStyle(
                       color: ConstColor.mainColorD2,
                       fontWeight: FontWeight.bold,
@@ -102,18 +103,23 @@ class _SignUpPageState extends State<SignUpPage> {
 
                 Btn(
                   onTap: ()async{
-
-                    AuthServices().signInWithMail(
-                        emailController.text.trim(),
-                        passwordController.text.trim(),
-                      context
-                    );
+                    String password = passwordController.text.trim();
+                    String conPassword = confirmPasswordController.text.trim();
+                    if(password==conPassword){
+                      AuthServices().signInWithMail(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                          context
+                      );
+                    }else{
+                      AlertMessage(context, const Text("Password and confirm password not match"));
+                    }
                   },
                     text: "Sign Up",
-                  textStyle: TextStyle(color: Colors.white),
+                  textStyle: const TextStyle(color: Colors.white),
                   btnColor: ConstColor.mainColor,
                   btnWidth: MediaQuery.of(context).size.width,
-                  btnShadow: [
+                  btnShadow: const[
                     BoxShadow(
                       color: ConstColor.mainColorL1,
                       offset: Offset(5,5),

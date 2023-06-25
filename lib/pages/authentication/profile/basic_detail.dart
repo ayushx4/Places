@@ -1,21 +1,31 @@
 import 'dart:developer';
 import 'dart:io';
-
+import 'package:clg_mat/models/users_places_detail.dart';
 import 'package:clg_mat/pages/home/home_page.dart';
 import 'package:clg_mat/widgets/alert_message.dart';
 import 'package:clg_mat/widgets/btn.dart';
+import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-
+import 'package:flutter/services.dart';
+import '../../../constants/const_colors.dart';
 import '../../../models/user_model.dart';
 
 class BasicDetail extends StatefulWidget {
 
   UserModel userModel;
+  File? profileImage;
+  int avatar;
 
-  BasicDetail({required this.userModel});
+
+  BasicDetail({
+    required this.userModel,
+    required this.avatar,
+    this.profileImage,
+
+  });
 
   @override
   State<BasicDetail> createState() => _BasicDetailState();
@@ -24,13 +34,24 @@ class BasicDetail extends StatefulWidget {
 class _BasicDetailState extends State<BasicDetail> {
 
   var usernameController = TextEditingController();
-  var bioController = TextEditingController();
-  File? profileImage;
+  var aboutUserController = TextEditingController();
 
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: ConstColor.mainColorL2,
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: ConstColor.mainColorL2,
+        )
+    );
+
     return Scaffold(
+      resizeToAvoidBottomInset : false,
+      backgroundColor: ConstColor.mainColorL2,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -44,75 +65,53 @@ class _BasicDetailState extends State<BasicDetail> {
               const Text("Profile",style: TextStyle(fontSize: 20),),
               const SizedBox(height: 20,),
 
-              //profile pic
-              Container(
-                height: 200,
-                width: 200,
-                child: Stack(
-                  children: [
-                    SizedBox(
-                        height : 200,
-                        width: 200,
-                        child: CircleAvatar(
-                          backgroundImage: (profileImage!=null) ? FileImage(profileImage!) : null,
-                        )
-                    ),
-                    
-                    Positioned(
-                      width: 50,
-                        height: 50,
-                        top: 5,
-                        right: 5,
-                        child:GestureDetector(
-                          onTap: ()async{
-                            selectImage();
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.indigo,
-                              borderRadius: BorderRadius.all(Radius.circular(50)),
-                            ),
-                            child: const Center(
-                              child: Icon(Icons.edit,color: Colors.white,),
-                            ),
-                          ),
-                        )
-                    ),
-                  ]
-              ),
-        ),
-
-
-
-              SizedBox(height: 15,),
 
               //username
-              TextField(
-                controller: usernameController,
-                decoration: InputDecoration(
-                  label: Text("Username"),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: CustomInputFeild(
+                    controller: usernameController,
+                    isPassword: false,
+                    label: "Nick name"
                 ),
               ),
-              SizedBox(height: 15,),
+              
 
               //bio
-              TextField(
-                controller: bioController,
-                decoration: InputDecoration(
-                  label: Text("Bio"),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: 100,
+                  ),
+                  child: CustomInputFeild(
+                    controller: aboutUserController,
+                    maxLine: 8,
+                    isPassword: false,
+                    label: "Describe your self",
+                  ),
                 ),
               ),
 
-              Btn(
-                  text: "Create Profile",
-                onTap: (){
-                  createProfile();
-                },
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Btn(
+                  onTap: (){
+                    createProfile();
+                  },
+
+                    text: "Create Profile",
+                    textStyle: const TextStyle(color: Colors.white),
+                    btnColor: ConstColor.mainColor,
+                    btnWidth: MediaQuery.of(context).size.width,
+                    btnShadow: const[
+                    BoxShadow(
+                      color: ConstColor.mainColorL1,
+                      offset: Offset(5,5),
+                    )
+                  ]
+                ),
               ),
-
-
-
-
 
 
 
@@ -129,38 +128,38 @@ class _BasicDetailState extends State<BasicDetail> {
   }
 
 
-
-  Future selectImage()async{
-
-    XFile? imageFile;
-    imageFile = await ImagePicker().pickImage(source: ImageSource.gallery,) ;
-    Navigator.popUntil(context, (route) => route.isFirst);
-    print(imageFile.toString());
-
-    if(imageFile==null){
-      AlertMessage(context , Text("Someting want wrong"));
-    }else{
-      final tempImage = File(imageFile!.path);
-      // CroppedFile? croppedFile = await ImageCropper().cropImage(sourcePath: imageFile!.path);
-      setState(() {
-        this.profileImage = tempImage;
-      });
-
-    }
-    
-  }
-
   createProfile()async {
     log("entering crete profile block of code////////////////////////");
 
     if (usernameController != null) {
-      await uploadTask();
+
+      if(widget.avatar==0){
+        uploadTask();
+      }
+
+      UserModel userModel=widget.userModel;
+      userModel.createdOn=DateTime.timestamp();
+      userModel.userName=usernameController.text.trim();
+      userModel.aboutUser=aboutUserController.text.trim();
+      userModel.avatar = widget.avatar;
 
       try {
         await FirebaseFirestore.instance.collection("users")
             .doc(widget.userModel.uid).set(widget.userModel.toMap());
       } catch (error) {
         AlertMessage(context , Text(error.toString()));
+      }
+      
+      UsersPlacesDetail usersPlacesDetail = UsersPlacesDetail(
+        uid: widget.userModel.uid,
+        placesList: null
+      );
+
+      try{
+        await FirebaseFirestore.instance.collection("usersPlacesDetail")
+                  .doc(widget.userModel.uid).set(usersPlacesDetail.toMap());
+      }catch(error){
+        AlertMessage(context, Text(error.toString()));
       }
 
       Navigator.popUntil(context, (route) => route.isFirst);
@@ -170,18 +169,19 @@ class _BasicDetailState extends State<BasicDetail> {
               HomePage(uid: widget.userModel.uid.toString()))
       );
     } else {
-      AlertMessage(context , Text("Please enter username"));
+      AlertMessage(context ,Text("Please enter username"));
     }
   }
 
 
 
   uploadTask()async{
-    if(profileImage!=null){
+
+    if(widget.profileImage!=null){
       Reference storageReference = FirebaseStorage.instance
           .ref().child("profile_pictures").child(widget.userModel.uid.toString());
 
-      await storageReference.putFile(profileImage!);
+      await storageReference.putFile(widget.profileImage!);
 
       AlertMessage(context, Text("Nice Profile pic"));
 

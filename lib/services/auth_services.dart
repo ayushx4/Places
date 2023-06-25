@@ -1,5 +1,6 @@
 import 'package:clg_mat/models/user_model.dart';
 import 'package:clg_mat/pages/authentication/profile/basic_detail.dart';
+import 'package:clg_mat/pages/authentication/profile/choose_profilepic.dart';
 import 'package:clg_mat/pages/home/home_page.dart';
 import 'package:clg_mat/widgets/alert_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,10 +13,9 @@ class AuthServices{
 
   Future signInWithMail(String email, String password,context) async {
     UserCredential? credential;
-    
+
 
     try{
-
       credential = await _auth.
       createUserWithEmailAndPassword(email: email, password: password);
 
@@ -32,10 +32,10 @@ class AuthServices{
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => BasicDetail(userModel: newUser)
+              builder: (context) => ChooseProfilePic(userModel: newUser)
           ));
     } catch(error){
-      AlertMessage(Text(error.toString()), context);
+      AlertMessage(context,Text(error.toString()));
     }
   }
 
