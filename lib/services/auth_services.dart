@@ -40,12 +40,14 @@ class AuthServices{
   }
 
 
+
+
+  // ignore: non_constant_identifier_names
   Future LogInWithMail(String email,String password , context) async{
 
     UserCredential? credential;
 
     try{
-
       credential = await _auth.
       signInWithEmailAndPassword(email: email, password: password);
       

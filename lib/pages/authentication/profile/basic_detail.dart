@@ -6,7 +6,6 @@ import 'package:clg_mat/widgets/alert_message.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -116,6 +115,191 @@ class _BasicDetailState extends State<BasicDetail> {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             ],
 
         )
@@ -134,14 +318,14 @@ class _BasicDetailState extends State<BasicDetail> {
     if (usernameController != null) {
 
       if(widget.avatar==0){
-        uploadTask();
+        await uploadTask();
       }
 
-      UserModel userModel=widget.userModel;
-      userModel.createdOn=DateTime.timestamp();
-      userModel.userName=usernameController.text.trim();
-      userModel.aboutUser=aboutUserController.text.trim();
-      userModel.avatar = widget.avatar;
+      // UserModel userModel=widget.userModel;
+      widget.userModel.createdOn=DateTime.timestamp();
+      widget.userModel.userName=usernameController.text.trim();
+      widget.userModel.aboutUser=aboutUserController.text.trim();
+      widget.userModel.avatar = widget.avatar;
 
       try {
         await FirebaseFirestore.instance.collection("users")
@@ -159,12 +343,12 @@ class _BasicDetailState extends State<BasicDetail> {
         await FirebaseFirestore.instance.collection("usersPlacesDetail")
                   .doc(widget.userModel.uid).set(usersPlacesDetail.toMap());
       }catch(error){
+        // ignore: use_build_context_synchronously
         AlertMessage(context, Text(error.toString()));
       }
 
-      Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacement(
-          context,
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) =>
               HomePage(uid: widget.userModel.uid.toString()))
       );
@@ -183,12 +367,15 @@ class _BasicDetailState extends State<BasicDetail> {
 
       await storageReference.putFile(widget.profileImage!);
 
-      AlertMessage(context, Text("Nice Profile pic"));
+      // ignore: use_build_context_synchronously
+      AlertMessage(context, const Text("Nice Profile pic"));
 
 
      await storageReference.getDownloadURL().then(
-              (imageUrl) async{
-            widget.userModel.profilePic = imageUrl;
+              (imageUrl) {
+                print(imageUrl);
+                log(imageUrl + "///////////////////////////////////////////////////////////////////");
+        widget.userModel.profilePic = imageUrl;
           }
       );
     }

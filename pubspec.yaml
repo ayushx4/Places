@@ -103,6 +103,15 @@ flutter:
         - asset: assets\fonts\JosefinSans-Light.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
+    - family: notoSansHK
+      fonts:
+        - asset: assets\fonts\NotoSansHK-Black.otf
+        - asset: assets\fonts\NotoSansHK-Bold.otf
+        - asset: assets\fonts\NotoSansHK-Light.otf
+        - asset: assets\fonts\NotSansHK-Medium.otf
+        - asset: assets\fonts\NotoSansHK-Regular
+        - asset: assets\fonts\NotoSansHK-Thin
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

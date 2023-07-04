@@ -71,7 +71,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                             children: [
                               Container(
                                 height: 30,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8)),
                                     color: Colors.white70),
@@ -82,15 +82,15 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                                     value: visibilityValue,
                                     dropdownColor: Colors.white70,
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                    style: TextStyle(
+                                        const BorderRadius.all(Radius.circular(8)),
+                                    style: const TextStyle(
                                         color: Colors.black54, fontSize: 16),
                                     items: visibilityList
                                         .map(buildMenuButton)
                                         .toList(),
                                     onChanged: (value) {
                                       setState(() {
-                                        this.visibilityValue = value.toString();
+                                        visibilityValue = value.toString();
                                       });
                                     },
                                   ),
@@ -99,7 +99,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                             ],
                           ),
 
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
 
@@ -110,7 +110,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                             label: "Place name",
                           ),
 
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
 
@@ -145,7 +145,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                 uid: widget.uid,
                 placeId: placeId,
                 placeName: placeName,
-                placeAbout: placeAbout,
+                placeDescription: placeAbout,
                 placeVisibility: visibilityValue,
                 placeCreatedOn: DateTime.now(),
               );

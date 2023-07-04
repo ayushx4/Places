@@ -34,12 +34,12 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
             return Column(
               children: [
                 ConstrainedBox(
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 100,
                     // maxHeight: 600,
                   ),
                   child: Container(
-                    decoration: BoxDecoration(color: ConstColor.bgColor),
+                    decoration: const BoxDecoration(color: ConstColor.bgColor),
                     child: Padding(
                       padding:
                           const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -51,16 +51,16 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                               child: ProfilePicUserName(uid: uid)
                           ),
 
-                          Divider(),
+                          const Divider(),
 
                           // Text part Place name and place description
                           Row(
                             children: [
                               Padding(
-                                padding: EdgeInsets.symmetric(vertical:0),
+                                padding: const EdgeInsets.symmetric(vertical:0),
                                 child: Text(
                                   placeName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
                                     overflow: TextOverflow.fade,
@@ -71,12 +71,12 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                           ),
 
                           ConstrainedBox(
-                            constraints: BoxConstraints(
+                            constraints: const BoxConstraints(
                               maxHeight: 50,
                             ),
                             child: Text(
                               placeAbout,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18,
                                   overflow: TextOverflow.fade
                               ),
@@ -96,7 +96,7 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                             children: [
                               Text(
                                 placeCreatedOn.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w400,
                                   color: ConstColor.fontLightBlack,
@@ -104,14 +104,14 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                               ),
                               Text(
                                 visibility.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w400,
                                   color: ConstColor.fontLightBlack,
                                 ),
                               ),
 
-                              SizedBox(height: 10,)
+                              const SizedBox(height: 10,)
                             ],
                           )
                         ],
@@ -120,15 +120,15 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                   ),
                 ),
 
-                Divider()
+                const Divider()
               ],
             );
           } else {
             return ConstrainedBox(
-              constraints: BoxConstraints(minHeight: 200),
+              constraints: const BoxConstraints(minHeight: 200),
               child: Container(
-                decoration: BoxDecoration(color: ConstColor.widgetsBgGrayColor),
-                child: SizedBox(
+                decoration: const BoxDecoration(color: ConstColor.widgetsBgGrayColor),
+                child: const SizedBox(
                     height: 20,
                     child: Center(child: CircularProgressIndicator())),
               ),

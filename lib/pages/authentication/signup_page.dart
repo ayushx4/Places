@@ -1,4 +1,6 @@
 import 'package:clg_mat/constants/const_colors.dart';
+import 'package:clg_mat/constants/const_textstyle.dart';
+import 'package:clg_mat/constants/const_values.dart';
 import 'package:clg_mat/pages/authentication/login_page.dart';
 import 'package:clg_mat/services/auth_services.dart';
 import 'package:clg_mat/widgets/alert_message.dart';
@@ -43,10 +45,10 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //logo
-                SizedBox(
+                const SizedBox(
                   height: 70,
-                  child: const Image(
-                      image: AssetImage("assets/images/app_logo3.png")),
+                  child: Image(
+                      image: AssetImage(ConstValues.logoFilePath)),
                 ),
 
 
@@ -58,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     style: TextStyle(
                       color: ConstColor.mainColorD2,
                       fontWeight: FontWeight.bold,
-                      fontFamily: "Alegreya_Sans",
+                      fontFamily: ConstantTextStyle.alegreya_Sans,
                       // fontSize: double.infinity
                     )
                       ,
@@ -69,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   style: TextStyle(
                       color: ConstColor.mainColorD1,
                       fontWeight: FontWeight.w300,
-                    fontFamily: "Josefin_Sans",
+                    fontFamily: ConstantTextStyle.josefin_Sans,
                     fontSize: 18,
 
                   )
@@ -99,7 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     label: "Confirm password",
                   ),
                 ),
-                SizedBox(height: 18,),
+                const SizedBox(height: 18,),
 
                 Btn(
                   onTap: ()async{
@@ -134,33 +136,36 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
 
-        bottomNavigationBar: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Already have an account ",
-                  style: TextStyle(color: ConstColor.mainColorD1),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "Already have an account ",
+                style: TextStyle(color: ConstColor.mainColorD1),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context)=> const LoginPage(),
+                      ));
+                },
+                child: const Text(
+                    "Log In",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight : FontWeight.w600,
+                        fontFamily:ConstantTextStyle.alegreya_Sans,
+                        fontSize: 18
+                    )
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context)=> LoginPage(),
-                        ));
-                  },
-                  child: Text(
-                      "Log In",
-                      style: TextStyle(color: Colors.black,fontWeight : FontWeight.w600,fontFamily:"Alegreya_Sans",fontSize: 18)
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         )
 

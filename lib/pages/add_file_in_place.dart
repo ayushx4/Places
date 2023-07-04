@@ -211,7 +211,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
 
         await ref.putFile(file!);
 
-        await ref.getDownloadURL().then((ds) => fileModel.docLinkW = ds);
+        await ref.getDownloadURL().then((ds) => fileModel.docLink = ds);
       }
 
       //set file model

@@ -1,12 +1,11 @@
-import 'dart:developer';
-
+import 'package:clg_mat/constants/const_textstyle.dart';
+import 'package:clg_mat/constants/const_values.dart';
 import 'package:clg_mat/pages/authentication/signup_page.dart';
 import 'package:clg_mat/services/auth_services.dart';
 import 'package:clg_mat/widgets/btn.dart';
 import 'package:clg_mat/widgets/custom_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../../constants/const_colors.dart';
 
 class LoginPage extends StatefulWidget {
@@ -41,21 +40,21 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 70,
-                  child: const Image(
-                      image: AssetImage("assets/images/app_logo3.png")),
+                  child: Image(
+                      image: AssetImage(ConstValues.logoFilePath)),
                 ),
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width / 2,
-                  child: FittedBox(
+                  child: const FittedBox(
                     fit: BoxFit.contain,
-                    child: const Text(
+                    child: Text(
                       "Log In",
                       style: TextStyle(
                         color: ConstColor.mainColorD2,
                         fontWeight: FontWeight.bold,
-                        fontFamily: "Alegreya_Sans",
+                        fontFamily: ConstantTextStyle.alegreya_Sans,
                         // fontSize: double.infinity
                       ),
                     ),
@@ -65,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       color: ConstColor.mainColorD1,
                       fontWeight: FontWeight.w300,
-                      fontFamily: "Josefin_Sans",
+                      fontFamily: ConstantTextStyle.josefin_Sans,
                       fontSize: 18,
                     )),
                 Padding(
@@ -84,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     label: "Password",
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 18,
                 ),
                 Btn(
@@ -93,10 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                           passwordController.text.trim(), context);
                     },
                     text: "Login",
-                    textStyle: TextStyle(color: Colors.white),
+                    textStyle: const TextStyle(color: Colors.white),
                     btnColor: ConstColor.mainColor,
                     btnWidth: MediaQuery.of(context).size.width,
-                    btnShadow: [
+                    btnShadow: const [
                       BoxShadow(
                         color: ConstColor.mainColorL1,
                         offset: Offset(5, 5),
@@ -107,34 +106,32 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "why you don't have an account ?",
-                style: TextStyle(color: ConstColor.mainColorD1),
-              ),
-              const SizedBox(
-                width: 5,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "why you don't have an account ?",
+              style: TextStyle(color: ConstColor.mainColorD1),
+            ),
+            const SizedBox(
+              width: 5,
 
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context)=> const SignUpPage(),
+                ));
+              },
+              child: const Text(
+                "Create new",
+                style: TextStyle(color: Colors.black,fontWeight : FontWeight.w600,fontFamily:"Alegreya_Sans",fontSize: 18)
               ),
-              GestureDetector(
-                onTap: (){
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context)=> SignUpPage(),
-                  ));
-                },
-                child: Text(
-                  "Create new",
-                  style: TextStyle(color: Colors.black,fontWeight : FontWeight.w600,fontFamily:"Alegreya_Sans",fontSize: 18)
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

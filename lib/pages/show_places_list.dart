@@ -1,3 +1,4 @@
+import 'package:clg_mat/constants/const_colors.dart';
 import 'package:clg_mat/widgets/place_feed_design.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
@@ -21,11 +22,11 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
         stream: FirebaseFirestore.instance.collection("usersPlacesDetail").doc(widget.uid).snapshots(),
         builder:(context,snapshot){
           if(snapshot.hasData){
-            List? placesList = snapshot.data!["placesList"] ?? null;
+            List? placesList = snapshot.data!["placesList"];
 
             if(placesList!=null){
               return ListView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                   itemCount: placesList.length,
                   itemBuilder:(context,index){
                     String placeId = placesList[index];
@@ -33,9 +34,22 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
                   }
               );
             }else{
-              return Text("Create any place you want");
-            }
+              // return Text("Create any place you want");
+              return
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(height:800,color: Colors.red,),
+                      Container(height:800,color: Colors.black45,),
+                      Container(height:800,color: Colors.red,),
+                      Container(height:800,color: Colors.yellow,),
+                      Container(height:800,color: Colors.red,),
+                    ],
 
+                  ),
+                )
+              ;
+            }
 
           }
           else{

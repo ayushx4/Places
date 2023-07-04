@@ -4,6 +4,7 @@ import 'package:clg_mat/widgets/btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../constants/const_colors.dart';
 import '../../../models/user_model.dart';
@@ -78,13 +79,14 @@ class _ChooseProfilePicState extends State<ChooseProfilePic> {
                                 onTap: ()async{
                                   selectImage();
                                 },
+
                                 child: Container(
                                   decoration: const BoxDecoration(
                                     color: Colors.indigo,
                                     borderRadius: BorderRadius.all(Radius.circular(50)),
                                   ),
                                   child: const Center(
-                                    child: FaIcon(FontAwesomeIcons.edit,color: Colors.white,),
+                                    child: FaIcon(FontAwesomeIcons.edit,color: Colors.white),
                                   ),
                                 ),
                               )
@@ -134,14 +136,7 @@ class _ChooseProfilePicState extends State<ChooseProfilePic> {
                             },
 
                             text: "Next",
-                            textStyle: const TextStyle(color: Colors.white),
-                            btnColor: ConstColor.mainColor,
-                            btnShadow: const[
-                              BoxShadow(
-                                color: ConstColor.mainColorL1,
-                                offset: Offset(5,5),
-                              )
-                            ]
+                            btnWidth: 100,
                         ),
 
                       ],
@@ -171,9 +166,14 @@ class _ChooseProfilePicState extends State<ChooseProfilePic> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        child: CircleAvatar(
-          backgroundImage: AssetImage(selectedAvatar),
-          radius: 50,
+        child: PhysicalModel(
+          elevation: 10,
+          color: Colors.black45,
+          shape: BoxShape.circle,
+          child: CircleAvatar(
+            backgroundImage: AssetImage(selectedAvatar),
+            radius: 50,
+          ),
         ),
         onTap: (){
           profileImage=File(selectedAvatar);
@@ -215,7 +215,7 @@ class _ChooseProfilePicState extends State<ChooseProfilePic> {
       AlertMessage(context , Text("Someting want wrong"));
     }else{
       final tempImage = File(imageFile.path);
-      // CroppedFile? croppedFile = await ImageCropper().cropImage(sourcePath: imageFile!.path);
+      // CroppedFile? croppedFile = await ImageCropper().cropImage(sourcePath: imageFile.path);
       setState(() {
         profileImage = tempImage;
         avatar=0;

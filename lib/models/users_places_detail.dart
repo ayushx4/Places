@@ -17,9 +17,9 @@ class UsersPlacesDetail{
 
   Map<String,dynamic> toMap(){
     return {
-      "uid" : this.uid,
-      "placesList" : this.placesList,
-      "userKeyword" : this.userKeyword
+      "uid" : uid,
+      "placesList" : placesList,
+      "userKeyword" : userKeyword
     };
 }
 

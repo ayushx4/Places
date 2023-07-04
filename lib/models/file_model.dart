@@ -3,7 +3,7 @@ class FileModel{
   String? fileName;
   String? fileDescription;
   String? docId;
-  String? docLinkW;
+  String? docLink;
   String? attachedLink;
   List? fileKeywords;
   DateTime? fileCreatedOn;
@@ -12,7 +12,7 @@ class FileModel{
     this.fileName,
     this.fileId,
     this.fileCreatedOn,
-    this.docLinkW,
+    this.docLink,
     this.docId,
     this.fileDescription,
     this.attachedLink,
@@ -21,10 +21,10 @@ class FileModel{
   });
 
   FileModel.fromMap(Map<String,dynamic> map){
-    fileId = map["uploadId"];
+    fileId = map["fileId"];
     fileName =map["fileName"];
     docId=map["docId"];
-    docLinkW=map["docLinkW"];
+    docLink=map["docLink"];
     attachedLink=map["attachedLink"];
     fileCreatedOn = map["fileCreatedOn"];
     fileDescription = map["fileDescription"];
@@ -37,7 +37,7 @@ class FileModel{
       "fileId" : fileId,
       "fileName" : fileName,
       "docId" :docId,
-      "DocLinkW" : docLinkW,
+      "docLink" : docLink,
       "attachedLink" :attachedLink,
       "fileCreatedOn" : fileCreatedOn,
       "fileDescription" : fileDescription,

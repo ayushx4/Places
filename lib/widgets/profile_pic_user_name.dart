@@ -33,17 +33,17 @@ class _ProfilePicUserNameState extends State<ProfilePicUserName> {
                 backgroundImage: NetworkImage(url),
               ),
 
-              SizedBox(width: 5,),
+              const SizedBox(width: 5,),
               Expanded(
                   child: Text(userName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           overflow: TextOverflow.ellipsis)))
 
             ],
           ),
         );
       }else {
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       }
     }
 
