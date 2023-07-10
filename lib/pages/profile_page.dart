@@ -1,5 +1,7 @@
 import 'package:clg_mat/constants/const_textstyle.dart';
+import 'package:clg_mat/pages/show_places_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +20,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
 
-   int _aboutMaxLine = 6;
+   final int _placeAboutMaxLine = 6;
 
 
 
@@ -75,10 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                 if (userDetailSnapshot.hasData) {
                   List? placeList = userPlaceDetailSnapshot.data!["placesList"];
-                  int placesCount =0;
-                  if(placeList!=null){
-                    int length =placeList.length;
-                  }
+                  int placesCount =placeList!.length;
 
                   return Scaffold(
                     appBar: AppBar(
@@ -124,6 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                       elevation: 1,
                       backgroundColor: ConstColor.bgColor,
+
                     ),
 
 
@@ -168,15 +168,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   aboutUser,
-                                  maxLines: _aboutMaxLine,
+                                  maxLines: _placeAboutMaxLine,
                                   style: const TextStyle(
                                     fontFamily: ConstantTextStyle.josefin_Sans,
                                     fontWeight: FontWeight.w400
                                 ),
                                 ),
+                              ),
+
+                              const Divider(),
+
+                              //current user places_list
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text("Your places",style: TextStyle(fontWeight: FontWeight.bold),),
+
+                                    Divider(),
+
+                                    Expanded(child: ShowPlacesList(
+                                      uid: widget.uid.toString(),
+                                      forProfile:true,
+                                    )),
+                                  ],
+                                ),
                               )
-
-
                             ],
                           ),
                         ),

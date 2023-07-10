@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
 
+
 class CreatePlacePage extends StatefulWidget {
   String? uid;
   CreatePlacePage({
@@ -26,8 +27,8 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Color(0xFF413636),
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      systemNavigationBarColor:ConstColor.SCWhite ,
       statusBarColor: ConstColor.SCWhite,
       statusBarIconBrightness: Brightness.light,
     ));
@@ -38,10 +39,10 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
       body: Scaffold(
         backgroundColor: ConstColor.bgColor,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           elevation: 0,
           backgroundColor: ConstColor.bgColor,
-          title: Text(
+          title: const Text(
             "Create place",
             style: TextStyle(color: Colors.black),
           ),
@@ -146,6 +147,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                 placeId: placeId,
                 placeName: placeName,
                 placeDescription: placeAbout,
+                likes: 0,
                 placeVisibility: visibilityValue,
                 placeCreatedOn: DateTime.now(),
               );
@@ -158,6 +160,10 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
               //add places list in users_places_detail model
 
               List? placesList;
+
+              DocumentReference usersPlacesDetailRef = FirebaseFirestore.instance
+                  .collection("usersPlacesDetail")
+                  .doc(widget.uid);
               await FirebaseFirestore.instance
                   .collection("usersPlacesDetail")
                   .doc(widget.uid)
@@ -171,10 +177,9 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                 }
               });
 
-              await FirebaseFirestore.instance
-                  .collection("usersPlacesDetail")
-                  .doc(widget.uid)
-                  .update({"placesList": placesList});
+              await usersPlacesDetailRef.update({
+                "placesList": placesList
+              });
 
               Navigator.popUntil(context, (route) => route.isFirst);
               Navigator.pushReplacement(
@@ -183,7 +188,6 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
                       builder: (context) => ShowPlace(
                             uid: widget.uid.toString(),
                             placeId: newPlaceModel.placeId.toString(),
-                            isViwersPlace: true,
                           )));
             }
           } catch (error) {

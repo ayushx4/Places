@@ -1,26 +1,25 @@
-import 'package:clg_mat/constants/const_colors.dart';
-import 'package:clg_mat/pages/show_place.dart';
-import 'package:clg_mat/widgets/alert_message.dart';
-import 'package:clg_mat/widgets/profile_pic_user_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class PlaceFeedDesign extends StatefulWidget {
-  final String? placeId;
-  final String? uid;
+import '../constants/const_colors.dart';
+import '../pages/show_place.dart';
 
-  const PlaceFeedDesign({
-    super.key,
+class ProfilePlacelistDesign extends StatefulWidget {
+
+  String? placeId;
+  String? uid;
+
+  ProfilePlacelistDesign({
     required this.placeId,
     required this.uid
   });
 
   @override
-  State<PlaceFeedDesign> createState() => _PlaceFeedDesignState();
+  State<ProfilePlacelistDesign> createState() => _ProfilePlacelistDesignState();
 }
 
-class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
+class _ProfilePlacelistDesignState extends State<ProfilePlacelistDesign> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -34,9 +33,7 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
             String placeName = snapshot.data!["placeName"];
             String placeAbout = snapshot.data!["placeDescription"];
             String visibility = snapshot.data!["placeVisibility"];
-            List? placeLikeList = snapshot.data!["likesUidList"];
-            int placeLike = (placeLikeList==null) ? 0 : placeLikeList.length;
-            Timestamp placeCreatedOn = snapshot.data!["placeCreatedOn"];
+            String placeCreatedOn = snapshot.data!["placeCreatedOn"].toString();
 
             return Column(
               children: [
@@ -49,25 +46,17 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                     decoration: const BoxDecoration(color: ConstColor.bgColor),
                     child: Padding(
                       padding:
-                          const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                       child: Column(
                         children: [
-                          //profile pic and user name
-                          SizedBox(
-                            height: 40,
-                              child: ProfilePicUserName(uid: uid)
-                          ),
-
-                          const Divider(),
-
                           // Text part Place name and place description
                           GestureDetector(
                             onTap: (){
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context)=>ShowPlace(
+                                  MaterialPageRoute(builder: (context)=>ShowPlace(
                                     uid: widget.uid.toString(),
                                     placeId:widget.placeId!,
-                                ))
+                                  ))
                               );
 
                             },
@@ -94,8 +83,6 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                             ),
                             child: Text(
                               placeAbout,
-                              textAlign: TextAlign.start,
-
                               style: const TextStyle(
                                   fontSize: 18,
                                   overflow: TextOverflow.fade
@@ -114,24 +101,16 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              
-                              //like button
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: ()async{
-                                      await likeFunc(widget.uid.toString(),widget.placeId.toString());
-                                    },
-                                    icon: FaIcon(FontAwesomeIcons.heart,size: 15,),
-                                  ),
-
-                                  //like_count
-                                  Text(placeLike.toString()),
-                                ],
-                              ),
-
                               Text(
-                                placeCreatedOn.toDate().toString(),
+                                placeCreatedOn.toString(),
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w400,
+                                  color: ConstColor.fontLightBlack,
+                                ),
+                              ),
+                              Text(
+                                visibility.toString(),
                                 style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w400,
@@ -164,37 +143,4 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
           }
         });
   }
-  
-  Future likeFunc(String uid, String placeId)async{
-    
-    
-    //check user not like before this time
-    
-    //add like count in place_likes
-    DocumentReference ref = FirebaseFirestore.instance.collection("places").doc(placeId);
-    int like=0;
-    List? likesUidList ;
-    await ref.get().then(
-            (ds){
-              like = ds["likes"]+1;
-              likesUidList =ds["likesUidList"];
-              if(likesUidList!=null){
-                likesUidList!.add(widget.uid);
-              }else{
-                likesUidList=[widget.uid];
-              }
-              ref.update({
-                'likes' : like,
-                'likesUidList' : likesUidList
-              });
-
-            }
-    ).onError((error, stackTrace) => AlertMessage(context, Text(error.toString())));
-
-    
-
-
-
-  }
-  
 }

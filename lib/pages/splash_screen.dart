@@ -4,6 +4,7 @@ import 'package:clg_mat/constants/const_colors.dart';
 import 'package:clg_mat/constants/const_values.dart';
 import 'package:clg_mat/pages/authentication/signup_page.dart';
 import 'package:clg_mat/pages/home/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

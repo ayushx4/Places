@@ -83,73 +83,71 @@ class _HomePageState extends State<HomePage> {
                   slivers: <Widget>[
                     SliverAppBar(
                       backgroundColor: ConstColor.bgColor,
-                      // floating: true,
-                      // centerTitle: true,
-                      pinned: true,
-                      expandedHeight: 100,
+                      floating: true,
+                      // pinned: true,
+                      // expandedHeight:69,
 
-                      leading: GestureDetector(
-                        onTap: (){
-                          Navigator.of(context).popUntil((route) => route.isFirst);
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage(uid: widget.uid)));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 8,top: 8,bottom: 8),
-                          child: CircleAvatar(
-                            backgroundImage: setProfilePic(),
-                          ),
-                        ),
-                      ),
 
-                      title: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 5),
-                        child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(15)),
-                              // border: Border.all(color: Colors.black),
-                              color: ConstColor.mainColorL2.withOpacity(0.4),
-                              // color: Colors.black12,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10),
-                              child: TextField(
-                                cursorColor: ConstColor.mainColor,
-                                controller: searchController,
-                                autofocus: false,
-                                onTapOutside: (event)=> FocusManager.instance.primaryFocus?.unfocus(),
-                                decoration: InputDecoration(
-                                    hintText: "search",
-                                    border: InputBorder.none,
-                                    icon: Icon(MdiIcons.magnify,
-                                      color: ConstColor.mainColor,
-                                    )
-                                ),
-                              ),
-                            )),
-                      ),
 
                       flexibleSpace: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              TextButton(
-                                  onPressed: () {},
-                                  child: const Text(
-                                    "World",
-                                    style: TextStyle(color: ConstColor.elementBlackColor),
-                                  )),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text("Your place",
-                                    style: TextStyle(color: ConstColor.elementBlackColor)),
-                              ),
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+
+                                //profile pic
+                                GestureDetector(
+                                  onTap: (){
+                                    Navigator.of(context).popUntil((route) => route.isFirst);
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage(uid: widget.uid)));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                                    child: CircleAvatar(
+                                      backgroundImage: setProfilePic(),
+                                      radius: 16,
+                                    ),
+                                  ),
+                                ),
+
+                                //search bar
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 0),
+                                    child: Container(
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
+                                          // border: Border.all(color: Colors.black),
+                                          color: ConstColor.mainColorL2.withOpacity(0.4),
+                                          // color: Colors.black12,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: TextField(
+                                            cursorColor: ConstColor.mainColor,
+                                            controller: searchController,
+                                            autofocus: false,
+                                            onTapOutside: (event)=> FocusManager.instance.primaryFocus?.unfocus(),
+                                            decoration: InputDecoration(
+                                                hintText: "search",
+                                                border: InputBorder.none,
+                                                icon: Icon(MdiIcons.magnify,
+                                                  color: ConstColor.mainColor,
+                                                )
+                                            ),
+                                          ),
+                                        )),
+                                  ),
+                                )
+
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -161,22 +159,6 @@ class _HomePageState extends State<HomePage> {
                         height: MediaQuery.of(context).size.height,
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                TextButton(
-                                    onPressed: () {},
-                                    child: const Text(
-                                      "World",
-                                      style: TextStyle(color: ConstColor.elementBlackColor),
-                                    )),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: const Text("Your place",
-                                      style: TextStyle(color: ConstColor.elementBlackColor)),
-                                ),
-                              ],
-                            ),
 
                             const Divider(
                               height: 0,
@@ -184,7 +166,7 @@ class _HomePageState extends State<HomePage> {
 
 // Feed
                             Expanded(
-                              child: ShowPlacesList(uid: widget.uid),
+                              child: ShowPlacesList(uid: widget.uid, forProfile: false),
                             )
                           ],
                         ),

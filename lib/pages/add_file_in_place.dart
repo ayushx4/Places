@@ -24,9 +24,10 @@ class AddFileInPlace extends StatefulWidget {
 }
 
 class _AddFileInPlaceState extends State<AddFileInPlace> {
-  TextEditingController fileName = TextEditingController();
+  TextEditingController fileDisplayName = TextEditingController();
   TextEditingController fileAbout = TextEditingController();
   File? selectedFile;
+  String? fileName;
   TextEditingController linkController = TextEditingController();
 
   @override
@@ -54,7 +55,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                   children: [
                     IconButton(
                         onPressed: () {
-                          Navigator.popUntil(context, (route) => route.isFirst);
+                          Navigator.of(context).pop();
                         },
                         icon: FaIcon(FontAwesomeIcons.close)),
 
@@ -92,7 +93,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
                   autofocus: true,
-                  controller: fileName,
+                  controller: fileDisplayName,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
@@ -160,6 +161,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
         .pickFiles(allowMultiple: false, type: FileType.any);
 
     PlatformFile file = filePickerResult!.files.first;
+    fileName = file.name;
 
     if (file == null) {
       return ScaffoldMessenger.of(context)
@@ -168,7 +170,8 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
 
     if (file.extension == "pdf" ||
         file.extension == "doc" ||
-        file.extension == "docx") {
+        file.extension == "docx" ||
+        file.extension == "pptx") {
       this.selectedFile = File(file.path!);
     } else {
       ScaffoldMessenger.of(context)
@@ -177,7 +180,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
   }
 
   doneFunc() {
-    Future uploading = uploadTask(selectedFile);
+    Future uploading = uploadTask();
 
     //while uploading task run show loading indicator
     showDialog(
@@ -185,18 +188,23 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
         builder: (context) {
           uploading.whenComplete(() => Navigator.popUntil(context, (route) => route.isFirst));
           return Center(
-            child: CircularProgressIndicator(),
+            child: SizedBox(
+              height: 30,
+              width: 30,
+            ),
           );
         });
   }
 
-  Future uploadTask(File? file) async {
+  Future uploadTask() async {
     DateTime fileCreatedOn = DateTime.now();
     String fileId = widget.uid + (fileCreatedOn.toString());
     String docId = widget.uid + (Uuid().v4());
-    FileModel fileModel = new FileModel(
+
+    FileModel fileModel = FileModel(
       fileId: fileId,
-      fileName: fileName.text.trim(),
+      fileName: fileName,
+      fileDisplayName: fileDisplayName.text.trim(),
       docId: docId,
       attachedLink: linkController.text.trim(),
       fileDescription: fileAbout.text.trim(),
@@ -209,7 +217,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
         Reference ref =
             FirebaseStorage.instance.ref().child("files").child(docId);
 
-        await ref.putFile(file!);
+        await ref.putFile(selectedFile!);
 
         await ref.getDownloadURL().then((ds) => fileModel.docLink = ds);
       }
