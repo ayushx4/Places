@@ -82,13 +82,15 @@ class _HomePageState extends State<HomePage> {
 
                   }
 
+                  return NestedScrollView(
 
-                  return CustomScrollView(
-                    slivers: <Widget>[
+                    floatHeaderSlivers: true,
+
+                    headerSliverBuilder: (context,innerBoxIsScrolled)=> [
                       SliverAppBar(
                         backgroundColor: ConstColor.bgColor,
                         floating: true,
-                        // pinned: true,
+                        // pinned: false,
                         // expandedHeight:69,
 
 
@@ -155,28 +157,25 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                      ),
+                      )
+              ],
+                    body: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Column(
+                        children: [
 
-
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height,
-                          child: Column(
-                            children: [
-
-                              const Divider(
-                                height: 0,
-                              ),
+                          const Divider(
+                            height: 0,
+                          ),
 
 // Feed
-                              Expanded(
-                                child: ShowPlacesList(uid: widget.uid, forProfile: false),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+                          Expanded(
+                            child: ShowPlacesList(uid: widget.uid, forProfile: false),
+                          )
+                        ],
+                      ),
+                    ),
+
                   );
                 } else if(snapshot.hasError) {
                   return AlertMessage(context, Text(snapshot.error.toString()));
@@ -185,22 +184,22 @@ class _HomePageState extends State<HomePage> {
                 }
 
               }else{
-                return const Center(child: SizedBox(height: 30 ,child: CircularProgressIndicator()));
+                return const Center(child: SizedBox(height: 30,width:30,child: CircularProgressIndicator()));
               }
 
 
             }),
       ),
       floatingActionButton: FloatingActionButton(
-        elevation: 5,
-        // backgroundColor: Colors.transparent,
-        backgroundColor: ConstColor.mainColor,
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CreatePlacePage(uid: widget.uid)));
-        }, child: Icon(MdiIcons.plus,color: Colors.white,size: 30,)      ),
+          elevation: 5,
+          // backgroundColor: Colors.transparent,
+          backgroundColor: ConstColor.mainColor,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CreatePlacePage(uid: widget.uid)));
+          }, child: Icon(MdiIcons.plus,color: Colors.white,size: 30,)      ),
     );
   }
 
@@ -303,3 +302,104 @@ class _HomePageState extends State<HomePage> {
 // )
 // ],
 // )
+
+
+
+
+///// return to has data
+//
+// return
+// CustomScrollView(
+// slivers: <Widget>[
+// SliverAppBar(
+// backgroundColor: ConstColor.bgColor,
+// floating: true,
+// // expandedHeight:69,
+//
+//
+//
+// flexibleSpace: Column(
+// children: [
+// Padding(
+// padding: const EdgeInsets.symmetric(horizontal: 5),
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.spaceAround,
+// children: [
+//
+// //profile pic
+// GestureDetector(
+// onTap: (){
+// Navigator.of(context).popUntil((route) => route.isFirst);
+// Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage(uid: widget.uid)));
+// },
+// child: Padding(
+// padding: const EdgeInsets.symmetric(horizontal: 5),
+// child: CircleAvatar(
+// backgroundImage: setProfilePic(),
+// radius: 16,
+// ),
+// ),
+// ),
+//
+// //search bar
+// Expanded(
+// child: Padding(
+// padding: const EdgeInsets.symmetric(
+// horizontal: 5, vertical: 0),
+// child: Container(
+// height: 50,
+// decoration: BoxDecoration(
+// borderRadius:
+// const BorderRadius.all(Radius.circular(15)),
+// // border: Border.all(color: Colors.black),
+// color: ConstColor.mainColorL2.withOpacity(0.4),
+// // color: Colors.black12,
+// ),
+// child: Padding(
+// padding: const EdgeInsets.symmetric(
+// horizontal: 10),
+// child: TextField(
+// cursorColor: ConstColor.mainColor,
+// controller: searchController,
+// autofocus: false,
+// onTapOutside: (event)=> FocusManager.instance.primaryFocus?.unfocus(),
+// decoration: InputDecoration(
+// hintText: "search",
+// border: InputBorder.none,
+// icon: Icon(MdiIcons.magnify,
+// color: ConstColor.mainColor,
+// )
+// ),
+// ),
+// )),
+// ),
+// )
+//
+// ],
+// ),
+// ),
+// ],
+// ),
+// ),
+//
+//
+// SliverToBoxAdapter(
+// child: SizedBox(
+// height: MediaQuery.of(context).size.height,
+// child: Column(
+// children: [
+//
+// const Divider(
+// height: 0,
+// ),
+//
+// // Feed
+// Expanded(
+// child: ShowPlacesList(uid: widget.uid, forProfile: false),
+// )
+// ],
+// ),
+// ),
+// )
+// ],
+// );

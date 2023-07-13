@@ -30,8 +30,7 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
 
               if(placesList!=null){
                 return ListView.builder(
-
-                    physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                     itemCount: placesList.length,
                     itemBuilder:(context,index){
                       String placeId = placesList[index];
@@ -39,7 +38,7 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
                     }
                 );
               }else{
-                return Text("Create any place you want");
+                return const Text("Create any place you want");
                 // return
                 //   Column(
                 //     children: [

@@ -50,7 +50,7 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                       // maxHeight: 600,
                     ),
                     child: Container(
-                      decoration: const BoxDecoration(color: ConstColor.bgColor),
+                      decoration: const BoxDecoration(color: Colors.transparent),
                       child: Padding(
                         padding:
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -75,6 +75,8 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                                 );
 
                               },
+
+                              //place_name
                               child: Row(
                                 children: [
                                   Padding(
@@ -82,8 +84,8 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                                     child: Text(
                                       placeName,
                                       style: const TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
                                         overflow: TextOverflow.fade,
                                       ),
                                     ),
@@ -96,14 +98,20 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                               constraints: const BoxConstraints(
                                 maxHeight: 50,
                               ),
-                              child: Text(
-                                placeAbout,
-                                textAlign: TextAlign.start,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    placeAbout,
+                                    textAlign: TextAlign.start,
 
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    overflow: TextOverflow.fade
-                                ),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        overflow: TextOverflow.fade
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
 
@@ -115,36 +123,37 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                             // ),
 
                             //createdOn and visibility
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
+                            IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
 
-                                //like button
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: ()async{
-                                        await likeFunc(widget.uid.toString(),widget.placeId.toString());
-                                      },
-                                      icon: FaIcon(FontAwesomeIcons.heart,size: 15,),
-                                    ),
+                                  //like button
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: ()async{
+                                          await likeFunc(widget.uid.toString(),widget.placeId.toString());
+                                        },
+                                        icon: FaIcon(FontAwesomeIcons.heart,size: 15,),
+                                      ),
 
-                                    //like_count
-                                    Text(placeLike.toString()),
-                                  ],
-                                ),
-
-                                Text(
-                                  placeCreatedOn.toDate().toString(),
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w400,
-                                    color: ConstColor.fontLightBlack,
+                                      //like_count
+                                      Text(placeLike.toString()),
+                                    ],
                                   ),
-                                ),
 
-                                const SizedBox(height: 10,)
-                              ],
+                                  Text(
+                                    DateTimeFormate(publishedDate: placeCreatedOn).getDateFormated(),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w400,
+                                      color: ConstColor.fontLightBlack,
+                                    ),
+                                  ),
+
+                                ],
+                              ),
                             )
                           ],
                         ),
