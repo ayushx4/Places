@@ -1,10 +1,6 @@
 import 'package:clg_mat/models/user_model.dart';
-import 'package:clg_mat/pages/authentication/login_page.dart';
-import 'package:clg_mat/pages/authentication/profile/choose_profilepic.dart';
-import 'package:clg_mat/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'authentication/signup_page.dart';
 import 'home/home_page.dart';
 
 class Wrapper extends StatelessWidget {

@@ -3,6 +3,7 @@ import 'package:clg_mat/constants/const_values.dart';
 import 'package:clg_mat/pages/create_place_page.dart';
 import 'package:clg_mat/pages/profile_page.dart';
 import 'package:clg_mat/pages/show_places_list.dart';
+import 'package:clg_mat/widgets/alert_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,127 +61,134 @@ class _HomePageState extends State<HomePage> {
                 .doc(widget.uid)
                 .snapshots(),
             builder: (context, snapshot) {
-              String? profilePic = snapshot.data!["profilePic"];
-              int? avatar = snapshot.data!["avatar"];
 
-              ImageProvider setProfilePic(){
+              if(snapshot.connectionState==ConnectionState.active){
+                if (snapshot.hasData) {
 
-                if(avatar==1){
-                  return const AssetImage(ConstValues.defaultMaleAvatar);
-                }else if(avatar==2){
-                  return const AssetImage(ConstValues.defaultFemaleAvatar);
-                } else if(profilePic!=null){
-                  return NetworkImage(profilePic);
-                }else{
-                  return const AssetImage("assets/images/user.png");
-                }
+                  String? profilePic = snapshot.data!["profilePic"];
+                  int? avatar = snapshot.data!["avatar"];
 
-              }
+                  ImageProvider setProfilePic(){
 
+                    if(avatar==1){
+                      return const AssetImage(ConstValues.defaultMaleAvatar);
+                    }else if(avatar==2){
+                      return const AssetImage(ConstValues.defaultFemaleAvatar);
+                    } else if(profilePic!=null){
+                      return NetworkImage(profilePic);
+                    }else{
+                      return const AssetImage("assets/images/user.png");
+                    }
 
-              if (snapshot.hasData) {
-                return CustomScrollView(
-                  slivers: <Widget>[
-                    SliverAppBar(
-                      backgroundColor: ConstColor.bgColor,
-                      floating: true,
-                      // pinned: true,
-                      // expandedHeight:69,
+                  }
 
 
+                  return CustomScrollView(
+                    slivers: <Widget>[
+                      SliverAppBar(
+                        backgroundColor: ConstColor.bgColor,
+                        floating: true,
+                        // pinned: true,
+                        // expandedHeight:69,
 
-                      flexibleSpace: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
 
-                                //profile pic
-                                GestureDetector(
-                                  onTap: (){
-                                    Navigator.of(context).popUntil((route) => route.isFirst);
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage(uid: widget.uid)));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                                    child: CircleAvatar(
-                                      backgroundImage: setProfilePic(),
-                                      radius: 16,
+
+                        flexibleSpace: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+
+                                  //profile pic
+                                  GestureDetector(
+                                    onTap: (){
+                                      Navigator.of(context).popUntil((route) => route.isFirst);
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePage(uid: widget.uid)));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                                      child: CircleAvatar(
+                                        backgroundImage: setProfilePic(),
+                                        radius: 16,
+                                      ),
                                     ),
                                   ),
-                                ),
 
-                                //search bar
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5, vertical: 0),
-                                    child: Container(
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                          // border: Border.all(color: Colors.black),
-                                          color: ConstColor.mainColorL2.withOpacity(0.4),
-                                          // color: Colors.black12,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: TextField(
-                                            cursorColor: ConstColor.mainColor,
-                                            controller: searchController,
-                                            autofocus: false,
-                                            onTapOutside: (event)=> FocusManager.instance.primaryFocus?.unfocus(),
-                                            decoration: InputDecoration(
-                                                hintText: "search",
-                                                border: InputBorder.none,
-                                                icon: Icon(MdiIcons.magnify,
-                                                  color: ConstColor.mainColor,
-                                                )
-                                            ),
+                                  //search bar
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5, vertical: 0),
+                                      child: Container(
+                                          height: 50,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                            const BorderRadius.all(Radius.circular(15)),
+                                            // border: Border.all(color: Colors.black),
+                                            color: ConstColor.mainColorL2.withOpacity(0.4),
+                                            // color: Colors.black12,
                                           ),
-                                        )),
-                                  ),
-                                )
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: TextField(
+                                              cursorColor: ConstColor.mainColor,
+                                              controller: searchController,
+                                              autofocus: false,
+                                              onTapOutside: (event)=> FocusManager.instance.primaryFocus?.unfocus(),
+                                              decoration: InputDecoration(
+                                                  hintText: "search",
+                                                  border: InputBorder.none,
+                                                  icon: Icon(MdiIcons.magnify,
+                                                    color: ConstColor.mainColor,
+                                                  )
+                                              ),
+                                            ),
+                                          )),
+                                    ),
+                                  )
 
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        child: Column(
-                          children: [
-
-                            const Divider(
-                              height: 0,
-                            ),
-
-// Feed
-                            Expanded(
-                              child: ShowPlacesList(uid: widget.uid, forProfile: false),
-                            )
                           ],
                         ),
                       ),
-                    )
-                  ],
-                );
-              } else if(!snapshot.hasError) {
-                return const Center(
-                  child: Text("something went wrong try to re-login"),
-                );
-              } else{
+
+
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          child: Column(
+                            children: [
+
+                              const Divider(
+                                height: 0,
+                              ),
+
+// Feed
+                              Expanded(
+                                child: ShowPlacesList(uid: widget.uid, forProfile: false),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                } else if(snapshot.hasError) {
+                  return AlertMessage(context, Text(snapshot.error.toString()));
+                } else{
+                  return Center(child:Text('Somthing want wrong!'),);
+                }
+
+              }else{
                 return const Center(child: SizedBox(height: 30 ,child: CircularProgressIndicator()));
               }
+
+
             }),
       ),
       floatingActionButton: FloatingActionButton(

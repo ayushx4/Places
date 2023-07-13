@@ -28,6 +28,7 @@ class _ProfilePlacelistDesignState extends State<ProfilePlacelistDesign> {
             .doc(widget.placeId)
             .snapshots(),
         builder: (context, snapshot) {
+
           if (snapshot.hasData) {
             String uid = snapshot.data!["uid"];
             String placeName = snapshot.data!["placeName"];

@@ -1,5 +1,6 @@
 import 'package:clg_mat/constants/const_colors.dart';
 import 'package:clg_mat/pages/add_file_in_place.dart';
+import 'package:clg_mat/widgets/alert_message.dart';
 import 'package:clg_mat/widgets/file_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,93 +61,105 @@ class _ShowPlaceState extends State<ShowPlace> {
                     .doc(widget.placeId)
                     .snapshots(),
                 builder: (context, snapshot) {
-                  List? fileList = snapshot.data!["fileList"];
-                  String placeAbout = snapshot.data!["placeDescription"];
-                  return (!snapshot.hasData)
-                      ? const Center(
-                    child: Text("Something want wrong"),
-                  )
-                      : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ScrollConfiguration(
-                            behavior: const ScrollBehavior(
-                                androidOverscrollIndicator:
-                                AndroidOverscrollIndicator.stretch),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  //Place name from firebase
-                                  Text(
-                                    snapshot.data!["placeName"],
-                                    textAlign: TextAlign.start,
-                                    style: const TextStyle(
-                                      color: Color(0XFF221A4C),
-                                      fontSize: 60,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
 
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    child: ConstrainedBox(
-                                      constraints: const BoxConstraints(
-                                        maxHeight: 150,
-                                        // maxWidth: 20,
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          // color: Colors.red,
+                  if(snapshot.connectionState==ConnectionState.active){
+                    if(snapshot.hasData){
+                      List? fileList = snapshot.data!["fileList"];
+                      String placeAbout = snapshot.data!["placeDescription"];
+
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: ScrollConfiguration(
+                                behavior: const ScrollBehavior(
+                                    androidOverscrollIndicator:
+                                    AndroidOverscrollIndicator.stretch),
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      //Place name from firebase
+                                      Text(
+                                        snapshot.data!["placeName"],
+                                        textAlign: TextAlign.start,
+                                        style: const TextStyle(
+                                          color: Color(0XFF221A4C),
+                                          fontSize: 60,
+                                          fontWeight: FontWeight.bold,
                                         ),
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                            maxHeight: 150,
+                                            // maxWidth: 20,
+                                          ),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              // color: Colors.red,
+                                            ),
+                                            child: Text(
+                                              (placeAbout == "")
+                                                  ? "This place is for the Codding Geeks"
+                                                  : placeAbout,
+                                              style: const TextStyle(
+                                                  color: Colors.black45),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+
+                                      //shows file list status
+                                      (fileList == null ||
+                                          fileList.length == 0)
+                                          ? const Card(
                                         child: Text(
-                                          (placeAbout == "")
-                                              ? "This place is for the Codding Geeks"
-                                              : placeAbout,
-                                          style: const TextStyle(
-                                              color: Colors.black45),
-                                        ),
-                                      ),
-                                    ),
+                                            "no files are upoded"),
+                                      )
+                                          : ListView.builder(
+                                        physics:
+                                        const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: fileList.length,
+                                        itemBuilder: (context, index) {
+
+                                          return FileList(fileId: fileList[index]);
+                                        },
+                                      )
+                                    ],
                                   ),
-
-                                  const SizedBox(
-                                    height: 30,
-                                  ),
-
-                                  //shows file list status
-                                  (fileList == null ||
-                                      fileList.length == 0)
-                                      ? const Card(
-                                    child: Text(
-                                        "no files are upoded"),
-                                  )
-                                      : ListView.builder(
-                                    physics:
-                                    const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: fileList.length,
-                                    itemBuilder: (context, index) {
-
-                                      return FileList(fileId: fileList[index]);
-                                    },
-                                  )
-                                ],
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  );
+                      );
+
+                    }else if(snapshot.hasError){
+                      return AlertMessage(context, Text(snapshot.error.toString()));
+                    }else{
+                      return Center(child: Text('something want wrong'),);
+                    }
+                  }else{
+                    return Center(child: SizedBox(height: 15,child: CircularProgressIndicator(),),);
+                  }
+
+
+
                 }),
           ),
         ),
