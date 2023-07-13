@@ -71,12 +71,12 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                       },
                       child: Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
+                               const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: const BoxDecoration(
                             color: ConstColor.mainColor,
                             borderRadius: BorderRadius.all(Radius.circular(50)),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Done",
                             style: TextStyle(
                                 fontSize: 18,
@@ -94,12 +94,12 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                 child: TextField(
                   autofocus: true,
                   controller: fileDisplayName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 25,
                   ),
                   maxLines: 1,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: "Name",
                   ),
@@ -113,7 +113,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                     controller: fileAbout,
                     maxLines: 50,
                     // expands: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: "What's in this?",
                     ),
@@ -132,7 +132,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                   // add link
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(50)),
                         color: Colors.black12,
                       ),
@@ -140,7 +140,7 @@ class _AddFileInPlaceState extends State<AddFileInPlace> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: TextField(
                           controller: linkController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: InputBorder.none, hintText: "Add link"),
                         ),
                       ),

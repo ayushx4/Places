@@ -182,7 +182,7 @@ class _CreatePlacePageState extends State<CreatePlacePage> {
               });
 
               Navigator.popUntil(context, (route) => route.isFirst);
-              Navigator.pushReplacement(
+              Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => ShowPlace(

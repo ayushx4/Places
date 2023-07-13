@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'file_open_page.dart';
-
 class ShowPlace extends StatefulWidget {
   final String uid;
   final String placeId;
@@ -171,13 +169,6 @@ class _ShowPlaceState extends State<ShowPlace> {
           child: Icon(MdiIcons.plus),
         ));
   }
-
-        // file open function
-        fileOpenFunc(String fileId) {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context)=> FileOpenPage())
-          );
-        }
 
 }
 

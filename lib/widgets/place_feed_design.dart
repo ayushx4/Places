@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'date_time_formte.dart';
+
 class PlaceFeedDesign extends StatefulWidget {
   final String? placeId;
   final String? uid;
@@ -97,7 +99,7 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                               textAlign: TextAlign.start,
 
                               style: const TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 14,
                                   overflow: TextOverflow.fade
                               ),
                             ),
@@ -117,6 +119,7 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                               
                               //like button
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   IconButton(
                                     onPressed: ()async{
@@ -130,16 +133,20 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                                 ],
                               ),
 
-                              Text(
-                                placeCreatedOn.toDate().toString(),
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400,
-                                  color: ConstColor.fontLightBlack,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    DateTimeFormate(publishedDate: placeCreatedOn).getDateFormated().toString(),
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w400,
+                                      color: ConstColor.fontLightBlack,
+                                    ),
+                                  ),
+                                ],
                               ),
 
-                              const SizedBox(height: 10,)
                             ],
                           )
                         ],
