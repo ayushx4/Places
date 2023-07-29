@@ -24,9 +24,10 @@ class _ProfilePageState extends State<ProfilePage> {
    final int _placeAboutMaxLine = 6;
 
 
-
   @override
   Widget build(BuildContext context) {
+
+
 
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(
@@ -180,23 +181,17 @@ class _ProfilePageState extends State<ProfilePage> {
 
                                 const Divider(),
 
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                  child: const Text("Your places",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15)),
+                                ),
+
+                                Divider(),
                                 //current user places_list
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const Text("Your places",style: TextStyle(fontWeight: FontWeight.bold),),
-
-                                      Divider(),
-
-                                      Expanded(child: ShowPlacesList(
-                                        uid: widget.uid.toString(),
-                                        forProfile:true,
-                                      )),
-                                    ],
-                                  ),
+                                ShowPlacesList(
+                                  uid: widget.uid.toString(),
+                                  forProfile:true,
+                                  scroll: false,
                                 )
                               ],
                             ),

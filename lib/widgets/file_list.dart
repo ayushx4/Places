@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FileList extends StatefulWidget {
   String fileId;
@@ -30,6 +31,7 @@ class _FileListState extends State<FileList> {
               String fileDisplayName = fileSnapshot.data!["fileDisplayName"];
               String fileDescription = fileSnapshot.data!["fileDescription"];
               String docLink = fileSnapshot.data!["docLink"];
+              String attachedLink = fileSnapshot.data!["attachedLink"];
 
               return Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -47,52 +49,63 @@ class _FileListState extends State<FileList> {
                   ),
 
                   //name and description
-                  InkWell(
-                    onTap: (){
-                      openFile(docUrl:docLink,fileName: fileName);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
 
-                        // file_name
-                        Container(
+                      // file_name
+                      Container(
+                        height: 20,
+                        child: Text(
+                          fileDisplayName,
+                          style:
+                          const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: ConstColor.fontBlackk,
+                            overflow:
+                            TextOverflow.fade,
+                          ),
+                        ),
+                      ),
+
+                      // file_description
+                      Container(
+                        width: MediaQuery.of(context).size.width/1.5,
+                        height: 200,
+
+                        child: Text(
+                          fileDescription,
+                          style:
+                          const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            overflow:
+                            TextOverflow
+                                .fade,
+                          ),
+                        ),
+                      ),
+
+                      //photo of file
+                      InkWell(
+                        onTap: (){
+                          openFile(docUrl:docLink,fileName: fileName);
+                        },
+                        child: const SizedBox(
                           height: 20,
-                          child: Text(
-                            fileDisplayName,
-                            style:
-                            const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: ConstColor.fontBlackk,
-                              overflow:
-                              TextOverflow
-                                  .fade,
-                            ),
-                          ),
+                          child: Text('Open file',style: TextStyle(color: ConstColor.fontBlackk)),
                         ),
+                      ),
 
-                        // file_description
-                        Container(
-                          width: MediaQuery.of(context).size.width/1.5,
-                          height: 200,
+                      // link_button
+                      IconButton(
+                        onPressed: ()async{
+                          await openLink(Uri.parse(attachedLink));
+                        },
+                        icon: const Icon(Icons.link,color: Colors.blue),
+                      )
 
-                          child: Text(
-                            fileDescription,
-                            style:
-                            const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              overflow:
-                              TextOverflow
-                                  .fade,
-                            ),
-                          ),
-                        ),
-
-                        //photo of file
-
-                      ],
-                    ),
+                    ],
                   )
                 ],
               );
@@ -100,7 +113,7 @@ class _FileListState extends State<FileList> {
             }else if(fileSnapshot.hasError){
               return AlertMessage(context, Text(fileSnapshot.error.toString()));
             }else{
-              return Center(child: Text("no file found"),);
+              return const Center(child: Text("no file found"),);
             }
           }else{
             return ConstrainedBox(
@@ -145,6 +158,19 @@ class _FileListState extends State<FileList> {
     }
     return null;
   }
-  
-  
+
+  Future openLink(Uri url)async{
+    try{
+      await launchUrl(
+          url,
+          mode: LaunchMode.externalNonBrowserApplication,
+          webViewConfiguration: const WebViewConfiguration(enableJavaScript: false)
+      );
+    }catch(error){
+      AlertMessage(context, Text(error.toString()));
+    }
+  }
+
+
+
 }

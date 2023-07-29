@@ -1,5 +1,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class DateTimeFormate{
   Timestamp publishedDate;
@@ -71,7 +72,8 @@ class DateTimeFormate{
         (currentDay-publishedDay)<7){
       return "${currentDay-publishedDay} days ago";
     }else if(publishedYear==currentYear && publishedMonth==currentMonth){
-      return "${(currentDay-publishedDay)/7} weeks ago";
+      double week=(currentDay-publishedDay)/7;
+      return "${week.toInt()} weeks ago";
     }else if(publishedYear==currentYear){
       return getMontName(publishedMonth);
     }else{

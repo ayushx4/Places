@@ -2,17 +2,22 @@ import 'package:clg_mat/widgets/place_feed_design.dart';
 import 'package:clg_mat/widgets/profile_placelist_design.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import '../widgets/alert_message.dart';
 
 class ShowPlacesList extends StatefulWidget {
   //give user id to show user place list
   String uid;
   bool forProfile;
+  bool? scroll;
+
   ShowPlacesList({
+    super.key,
     required this.uid,
-    required this.forProfile
-});
+    required this.forProfile,
+    this.scroll,
+  });
+
+
 
   @override
   State<ShowPlacesList> createState() => _ShowPlacesListState();
@@ -21,6 +26,9 @@ class ShowPlacesList extends StatefulWidget {
 class _ShowPlacesListState extends State<ShowPlacesList> {
   @override
   Widget build(BuildContext context) {
+
+    bool scroll = widget.scroll ?? true;
+
     return StreamBuilder<DocumentSnapshot<Map<String,dynamic>>>(
         stream: FirebaseFirestore.instance.collection("usersPlacesDetail").doc(widget.uid).snapshots(),
         builder:(context,snapshot){
@@ -30,7 +38,8 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
 
               if(placesList!=null){
                 return ListView.builder(
-                  physics: BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  physics: (scroll) ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
                     itemCount: placesList.length,
                     itemBuilder:(context,index){
                       String placeId = placesList[index];

@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                     headerSliverBuilder: (context,innerBoxIsScrolled)=> [
                       SliverAppBar(
                         backgroundColor: ConstColor.bgColor,
-                        floating: true,
+                        // floating: true,
                         // pinned: false,
                         // expandedHeight:69,
 
@@ -170,7 +170,10 @@ class _HomePageState extends State<HomePage> {
 
 // Feed
                           Expanded(
-                            child: ShowPlacesList(uid: widget.uid, forProfile: false),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                              child: ShowPlacesList(uid: widget.uid, forProfile: true),
+                            ),
                           )
                         ],
                       ),
@@ -180,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                 } else if(snapshot.hasError) {
                   return AlertMessage(context, Text(snapshot.error.toString()));
                 } else{
-                  return Center(child:Text('Somthing want wrong!'),);
+                  return const Center(child:Text('Somthing want wrong!'),);
                 }
 
               }else{

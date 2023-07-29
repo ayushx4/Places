@@ -5,6 +5,7 @@ import 'package:clg_mat/widgets/profile_pic_user_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'date_time_formte.dart';
 
@@ -30,17 +31,17 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
             .collection("places")
             .doc(widget.placeId)
             .snapshots(),
-        builder: (context, snapshot) {
+        builder: (context, placeSnapshot) {
 
-          if(snapshot.connectionState== ConnectionState.active){
-            if (snapshot.hasData) {
-              String uid = snapshot.data!["uid"];
-              String placeName = snapshot.data!["placeName"];
-              String placeAbout = snapshot.data!["placeDescription"];
-              String visibility = snapshot.data!["placeVisibility"];
-              List? placeLikeList = snapshot.data!["likesUidList"];
+          if(placeSnapshot.connectionState== ConnectionState.active){
+            if (placeSnapshot.hasData) {
+              String uid = placeSnapshot.data!["uid"];
+              String placeName = placeSnapshot.data!["placeName"];
+              String placeAbout = placeSnapshot.data!["placeDescription"];
+              String visibility = placeSnapshot.data!["placeVisibility"];
+              List? placeLikeList = placeSnapshot.data!["likesUidList"];
               int placeLike = (placeLikeList==null) ? 0 : placeLikeList.length;
-              Timestamp placeCreatedOn = snapshot.data!["placeCreatedOn"];
+              Timestamp placeCreatedOn = placeSnapshot.data!["placeCreatedOn"];
 
               return Column(
                 children: [
@@ -111,6 +112,13 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                                         overflow: TextOverflow.fade
                                     ),
                                   ),
+
+                                  IconButton(
+                                    onPressed: ()async{
+                                    // await openLink();
+                                  },
+                                    icon: Icon(Icons.link),
+                                  )
                                 ],
                               ),
                             ),
@@ -127,7 +135,6 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-
                                   //like button
                                   Row(
                                     children: [
@@ -140,6 +147,16 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
 
                                       //like_count
                                       Text(placeLike.toString()),
+
+                                      const SizedBox(width: 5),
+
+                                      IconButton(
+                                          onPressed: (){
+                                            sharePlace();
+                                          },
+                                          icon:const Icon(Icons.share_outlined)
+                                      ),
+
                                     ],
                                   ),
 
@@ -164,8 +181,8 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
                   const Divider()
                 ],
               );
-            } else if(snapshot.hasError) {
-              return AlertMessage(context, Text(snapshot.error.toString()));
+            } else if(placeSnapshot.hasError) {
+              return AlertMessage(context, Text(placeSnapshot.error.toString()));
             }else{
               return const Center(child: Text('something want wrong'));
             }
@@ -189,35 +206,55 @@ class _PlaceFeedDesignState extends State<PlaceFeedDesign> {
 
   
   Future likeFunc(String uid, String placeId)async{
-    
-    
-    //check user not like before this time
-    
-    //add like count in place_likes
+
+    bool userLiked = false;
     DocumentReference ref = FirebaseFirestore.instance.collection("places").doc(placeId);
-    int like=0;
+    //check whether user liked this file or not
+
+    //add like
+
     List? likesUidList ;
     await ref.get().then(
             (ds){
-              like = ds["likes"]+1;
-              likesUidList =ds["likesUidList"];
-              if(likesUidList!=null){
-                likesUidList!.add(widget.uid);
-              }else{
-                likesUidList=[widget.uid];
-              }
-              ref.update({
-                'likes' : like,
-                'likesUidList' : likesUidList
-              });
+          likesUidList =ds["likesUidList"];
+          if(likesUidList!=null){
+            likesUidList!.add(widget.uid);
+          }else{
+            likesUidList=[widget.uid];
+          }
+          ref.update({
+            'likesUidList' : likesUidList
+          });
 
-            }
+        }
     ).onError((error, stackTrace) => AlertMessage(context, Text(error.toString())));
 
-    
+    if(userLiked){
+
+    }else{
+      //remove like
+    }
+
+
 
 
 
   }
-  
+
+  void sharePlace() {
+    //share place
+  }
+
+  // Future openLink(Uri url)async{
+  //   try{
+  //     await launchUrl(
+  //         url,
+  //         mode: LaunchMode.externalNonBrowserApplication,
+  //         webViewConfiguration: const WebViewConfiguration(enableJavaScript: false)
+  //     );
+  //   }catch(error){
+  //     AlertMessage(context, Text(error.toString()));
+  //   }
+  // }
+
 }
