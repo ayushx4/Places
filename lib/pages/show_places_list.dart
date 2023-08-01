@@ -37,14 +37,18 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
               List? placesList = snapshot.data!["placesList"];
 
               if(placesList!=null){
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: (scroll) ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
-                    itemCount: placesList.length,
-                    itemBuilder:(context,index){
-                      String placeId = placesList[index];
-                      return (widget.forProfile) ? ProfilePlacelistDesign(placeId: placeId,uid: widget.uid) : PlaceFeedDesign(placeId: placeId,uid: widget.uid,);
-                    }
+                return ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: (scroll) ? const ClampingScrollPhysics() : const NeverScrollableScrollPhysics(),
+                      itemCount: placesList.length,
+                      itemBuilder:(context,index){
+                        String placeId = placesList[index];
+                        return (widget.forProfile) ? ProfilePlacelistDesign(placeId: placeId,uid: widget.uid) : PlaceFeedDesign(placeId: placeId,uid: widget.uid,);
+                      }
+                  ),
                 );
               }else{
                 return const Text("Create any place you want");
@@ -72,5 +76,12 @@ class _ShowPlacesListState extends State<ShowPlacesList> {
 
         }
     );
+  }
+}
+
+class MyBehavior extends ScrollBehavior{
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

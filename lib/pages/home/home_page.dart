@@ -159,31 +159,31 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
               ],
-                    body: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: Column(
-                        children: [
-
-                          const Divider(
-                            height: 0,
-                          ),
-
-// Feed
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                              child: ShowPlacesList(uid: widget.uid, forProfile: true),
+                    body: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(onPressed: (){},
+                                child:const Text("World")
                             ),
-                          )
-                        ],
-                      ),
+                            TextButton(onPressed: (){},
+                                child:const Text("Your place")
+                            )
+                          ],
+                        ),
+
+                        Flexible(
+                            child: ShowPlacesList(uid: widget.uid, forProfile: true)
+                        )
+                      ],
                     ),
 
                   );
                 } else if(snapshot.hasError) {
                   return AlertMessage(context, Text(snapshot.error.toString()));
                 } else{
-                  return const Center(child:Text('Somthing want wrong!'),);
+                  return const Center(child:Text('Something want wrong!'),);
                 }
 
               }else{
